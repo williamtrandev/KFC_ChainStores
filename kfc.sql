@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 11, 2023 lúc 01:14 PM
+-- Thời gian đã tạo: Th5 11, 2023 lúc 03:02 PM
 -- Phiên bản máy phục vụ: 10.4.24-MariaDB
 -- Phiên bản PHP: 8.1.6
 
@@ -113,18 +113,19 @@ CREATE TABLE `donhang` (
   `ngayLap` datetime NOT NULL DEFAULT current_timestamp(),
   `tongTien` double NOT NULL,
   `trangThai` text NOT NULL DEFAULT 'Đang xử lý',
-  `maNhanVien` int(11) NOT NULL
+  `maNhanVien` int(11) NOT NULL,
+  `maCuaHang` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Đang đổ dữ liệu cho bảng `donhang`
 --
 
-INSERT INTO `donhang` (`maDonHang`, `sdtKhachHang`, `ngayLap`, `tongTien`, `trangThai`, `maNhanVien`) VALUES
-(28, '0907640612', '2023-05-11 15:59:45', 123000, 'Đang xử lý', 2),
-(29, '0987654321', '2023-05-11 16:54:11', 210000, 'Sẵn sàng giao', 2),
-(30, '0123456789', '2023-05-11 18:09:48', 123000, 'Chờ', 2),
-(31, '0123456789', '2023-05-11 18:12:48', 132000, 'Đang xử lý', 2);
+INSERT INTO `donhang` (`maDonHang`, `sdtKhachHang`, `ngayLap`, `tongTien`, `trangThai`, `maNhanVien`, `maCuaHang`) VALUES
+(28, '0907640612', '2023-05-11 15:59:45', 123000, 'Đang xử lý', 2, 1),
+(29, '0987654321', '2023-05-11 16:54:11', 210000, 'Sẵn sàng giao', 2, 1),
+(30, '0123456789', '2023-05-11 18:09:48', 123000, 'Chờ', 2, 1),
+(31, '0123456789', '2023-05-11 18:12:48', 132000, 'Đang xử lý', 2, 0);
 
 -- --------------------------------------------------------
 
@@ -324,7 +325,8 @@ INSERT INTO `nhanvien` (`maNhanVien`, `tenNhanVien`, `gioiTinh`, `ngaySinh`, `sd
 (1, 'Thành Trần', 1, '2003-11-30', '0907640698', 'Quận 7, TP. Hồ Chí Minh', 'Quản lý tổng', 1, 'admin123'),
 (2, 'William Tran', 1, '2003-11-30', '0907640699', 'Sa Đéc, Đồng Tháp', 'Nhân viên bán hàng', 1, 'thanhtran123'),
 (3, 'Thành Thứ Hai', 1, '2003-11-30', '0907640697', 'Lai Vung, Đồng Tháp', 'Nhân viên giao hàng', 1, 'thanhtran123'),
-(4, 'Thành Thứ Ba', 1, '2003-11-30', '0907640696', 'Quận 7, TP.Hồ Chí Minh', 'Nhân viên giao hàng', 1, 'thanhtran123');
+(4, 'Thành Thứ Ba', 1, '2003-11-30', '0907640696', 'Quận 7, TP.Hồ Chí Minh', 'Nhân viên giao hàng', 1, 'thanhtran123'),
+(5, 'Thành Chủ Nhật', 1, '2003-11-30', '0907640691', 'Quận 6, TP.Hồ Chí Minh', 'Đầu bếp', 1, 'thanhtran123');
 
 -- --------------------------------------------------------
 
@@ -539,7 +541,7 @@ ALTER TABLE `nhacungcap`
 -- AUTO_INCREMENT cho bảng `nhanvien`
 --
 ALTER TABLE `nhanvien`
-  MODIFY `maNhanVien` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `maNhanVien` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT cho bảng `phieunhaphang`
