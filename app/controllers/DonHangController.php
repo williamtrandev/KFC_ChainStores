@@ -7,21 +7,24 @@ class DonHangController extends BaseController
 		$this->model_dh = $this->model("DonHangModel");
 	}
 
-	public function getAllDonHangOnline()
+	public function getAllDonHangOnline($maCuaHang)
 	{
-		echo $this->model_dh->getAllDonHangOnline();
+		echo $this->model_dh->getAllDonHangOnline($maCuaHang);
 	}
-	public function getAllDonHangOnlineShip()
+	public function getAllDonHangOnlineShip($maCuaHang)
 	{
-		echo $this->model_dh->getAllDonHangOnlineShip();
+		echo $this->model_dh->getAllDonHangOnlineShip($maCuaHang);
 	}
-	public function insert($sdtKhachHang, $tongTien, $maNhanVien)
-	{
-		echo $this->model_dh->insert($sdtKhachHang, $tongTien, $maNhanVien);
+	public function getAllDonHangCanLam($maCuaHang) {
+		echo $this->model_dh->getAllDonHangCanLam($maCuaHang);
 	}
-	public function getMaDonHangMoiNhat()
+	public function insert($sdtKhachHang, $tongTien, $maNhanVien, $maCuaHang)
 	{
-		echo $this->model_dh->getMaDonHangMoiNhat();
+		echo $this->model_dh->insert($sdtKhachHang, $tongTien, $maNhanVien, $maCuaHang);
+	}
+	public function getMaDonHangMoiNhat($maCuaHang)
+	{
+		echo $this->model_dh->getMaDonHangMoiNhat($maCuaHang);
 	}
 	public function updateNhanVienGiao($maDonHang, $maNhanVien)
 	{

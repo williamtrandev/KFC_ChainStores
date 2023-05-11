@@ -13,27 +13,42 @@
     <div class="my-menu-bar">
         <div class="my-menu">
             <ul class="my-menu-links">
-                <li class="my-nav-link">
-                    <a href="<?php echo _WEB_ROOT ?>/home">
-                        <i class="fas fa-hamburger icon"></i>
-                        <span class="nav-text text">Order</span>
-                        <span class="tooltip-text">Order</span>
-                    </a>
-                </li>
-                <li class="my-nav-link">
-                    <a href="<?php echo _WEB_ROOT ?>/home/listOrder">
-                        <i class="fa-regular fa-rectangle-list icon"></i>
-                        <span class="nav-text text">Danh sách đơn đặt</span>
-                        <span class="tooltip-text">Danh sách đơn đặt hàng</span>
-                    </a>
-                </li>
-                <li class="my-nav-link">
-                    <a href="<?php echo _WEB_ROOT ?>/home/listShip">
-                        <i class="fa-sharp fa-solid fa-truck-fast icon"></i>
-                        <span class="nav-text text">Phân bổ đơn hàng</span>
-                        <span class="tooltip-text">Phân bổ đơn hàng online</span>
-                    </a>
-                </li>
+                <?php
+                if (json_decode($_SESSION['user'])->chucVu == 'Nhân viên bán hàng') {
+                    echo
+                    "<li class='my-nav-link'>
+                        <a href='" . _WEB_ROOT . "/home'>
+                            <i class='fas fa-hamburger icon'></i>
+                            <span class='nav-text text'>Order</span>
+                            <span class='tooltip-text'>Order</span>
+                        </a>
+                    </li>
+                    <li class='my-nav-link'>
+                        <a href='" . _WEB_ROOT . "/home/listOrder'>
+                            <i class='fa-regular fa-rectangle-list icon'></i>
+                            <span class='nav-text text'>Danh sách đơn đặt</span>
+                            <span class='tooltip-text'>Danh sách đơn đặt hàng</span>
+                        </a>
+                    </li>
+                    <li class='my-nav-link'>
+                        <a href='" . _WEB_ROOT . "/home/listShip'>
+                            <i class='fa-sharp fa-solid fa-truck-fast icon'></i>
+                            <span class='nav-text text'>Phân bổ đơn hàng</span>
+                            <span class='tooltip-text'>Phân bổ đơn hàng online</span>
+                        </a>
+                    </li>";
+                } else {
+                    // echo
+                    // "<li class='my-nav-link'>
+                    //     <a href='" . _WEB_ROOT . "/home/listToDo'>
+                    //         <i class='fa-solid fa-utensils icon'></i>
+                    //         <span class='nav-text text'>Đơn hàng cần làm</span>
+                    //         <span class='tooltip-text'>Đơn hàng cần làm</span>
+                    //     </a>
+                    // </li>";
+                }
+                ?>
+                
             </ul>
         </div>
         <div class="bottom-content">

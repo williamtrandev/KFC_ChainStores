@@ -60,7 +60,7 @@
 		function fetchGetDonHangOnlineShip() {
 			let tbody = $(".tbody-order-online");
 			tbody.children().remove();
-			fetch(`<?php echo _WEB_ROOT ?>/donHang/getAllDonHangOnlineShip`)
+			fetch(`<?php echo _WEB_ROOT ?>/donHang/getAllDonHangOnlineShip/<?php echo json_decode($_SESSION['user'])->maCuaHang ?>`)
 				.then(res => res.json())
 				.then(data => {
 					let tr = "";

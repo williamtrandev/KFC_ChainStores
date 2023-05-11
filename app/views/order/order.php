@@ -157,13 +157,13 @@
 		$(".btn-thanhtoan").click(() => {
 			let sdt = $(".sdt").val() == "" ? "0123456789" : $(".sdt").val();
 			let total = parseInt($(".total_order").text());
-			fetch(`<?php echo _WEB_ROOT ?>/donHang/insert/${sdt}/${total}/<?php echo json_decode($_SESSION['user'])->maNhanVien ?>`)
+			fetch(`<?php echo _WEB_ROOT ?>/donHang/insert/${sdt}/${total}/<?php echo json_decode($_SESSION['user'])->maNhanVien ?>/<?php echo json_decode($_SESSION['user'])->maCuaHang ?>`)
 				.then(res => res.text())
 				.then(data => {
 					if (data == 1) {
 						alert("Đã gửi order cho nhân viên bếp");
 
-						fetch(`<?php echo _WEB_ROOT ?>/donHang/getMaDonHangMoiNhat`)
+						fetch(`<?php echo _WEB_ROOT ?>/donHang/getMaDonHangMoiNhat/<?php echo json_decode($_SESSION['user'])->maCuaHang ?>`)
 							.then(res => res.text())
 							.then(data => {
 								let listOrder = JSON.parse(localStorage.getItem("listOrder"));

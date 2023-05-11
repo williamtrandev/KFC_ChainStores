@@ -43,8 +43,7 @@
 
 			<!-- Modal footer -->
 			<div class="modal-footer">
-				<button type="button" class="btn btn-success btn-xacnhandonhang">Xác nhận đơn hàng</button>
-				<button type="button" class="btn btn-danger btn-huydonhang">Hủy đơn hàng</button>
+				<button type="button" class="btn btn-success btn-hoanthanhdonhang">Hoàn thành đơn hàng</button>
 			</div>
 
 		</div>
@@ -58,7 +57,7 @@
 		function fetchGetAllDonHangOnline() {
 			let tbody = $(".tbody-order-online");
 			tbody.children().remove();
-			fetch(`<?php echo _WEB_ROOT ?>/donHang/getAllDonHangOnline/<?php echo json_decode($_SESSION['user'])->maCuaHang ?>`)
+			fetch(`<?php echo _WEB_ROOT ?>/donHang/getAllDonHangCanLam/<?php echo json_decode($_SESSION['user'])->maCuaHang ?>`)
 				.then(res => res.json())
 				.then(data => {
 					let tr = "";
@@ -99,28 +98,13 @@
 			modal.modal("show");
 
 		})
-		$(".btn-xacnhandonhang").click(() => {
-				let trangthai = "Đang xử lý";
+		$(".btn-hoanthanhdonhang").click(() => {
+				let trangthai = "Sẵn sàng giao";
 				fetch(`<?php echo _WEB_ROOT ?>/donHang/updateTrangThaiDonHang/${maDonHangClick}/${trangthai}`)
 					.then(res => res.text())
 					.then(data => {
 						if (data == 1) {
-							alert("Đã xác nhận đơn hàng");
-							fetchGetAllDonHangOnline();
-							$("#modalOrderList").modal("hide");
-						} else {
-							alert("Đã có gì đó xảy ra");
-						}
-					})
-					.catch(err => alert(err))
-			})
-			.$(".btn-huydonhang").click(() => {
-				let trangthai = "Đã hủy";
-				fetch(`<?php echo _WEB_ROOT ?>/donHang/updateTrangThaiDonHang/${maDonHangClick}/${trangthai}`)
-					.then(res => res.text())
-					.then(data => {
-						if (data == 1) {
-							alert("Đã hủy đơn hàng");
+							alert("Đã hoàn thành đơn hàng");
 							fetchGetAllDonHangOnline();
 							$("#modalOrderList").modal("hide");
 						} else {
