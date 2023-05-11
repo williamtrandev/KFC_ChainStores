@@ -377,11 +377,7 @@ header .header-text {
     color: var(--sidebar-color);
     transition: var(--animate-tran-03);
 }
-body.dark .my-sidebar li a:hover .icon,
-body.dark .my-sidebar li a:hover .text {
-    color: var(--sidebar-color);
-    transition: var(--animate-tran-03);
-}
+
 .search-box {
     background: var(--second-color);
     border-radius: 6px;
@@ -427,12 +423,7 @@ body.dark .my-sidebar li a:hover .text {
 .my-menu-bar .theme-mode i.sun {
     opacity: 0;
 }
-body.dark .my-menu-bar .theme-mode i.sun {
-    opacity: 1;
-}
-body.dark .my-menu-bar .theme-mode i.moon {
-    opacity: 0;
-}
+
 .my-menu-bar .theme-mode .toggle-switch {
     position: absolute;
     right: 0;
@@ -464,9 +455,7 @@ body.dark .my-menu-bar .theme-mode i.moon {
     background: var(--sidebar-color);
     transition: var(--animate-tran-03);
 }
-body.dark .switch:before {
-    left: 25px;
-}
+
 .my-menu-links {
     margin: 0 !important;
     padding: 0 !important;
@@ -511,10 +500,7 @@ body.dark .switch:before {
     position: absolute;
     z-index: 1;
 }
-body.dark .tooltip-text {
-    background-color: #d0adda;
-    color: #000;
-}
+
 .my-sidebar.close .my-nav-link:hover .tooltip-text,
 .my-sidebar.close .bottom-content li:hover .tooltip-text {
     visibility: visible;
@@ -545,9 +531,7 @@ body.dark .tooltip-text {
 .bottom-content .logout-icon {
     transform: rotate(180deg);
 }
-body.dark .my-nav-bottom-link.active .text {
-    color: white !important;
-}
+
 footer {
     background: var(--second-color);
 }
@@ -557,7 +541,19 @@ footer i {
 footer a:hover {
     color: var(--primary-color) !important;
 }
+table td .wrapper-product input {
+    width: 40px;
+    height: 30px;
+    border-radius: 5px;
+    text-align: center;
+    border: none;
+    background-color: #ddd;
+    margin: 0 10px;
+}
 
+table td .wrapper-product input:focus {
+    outline: none;
+}
 #myCarousel {
     margin-top: 2rem !important;
     width: 100%;
@@ -636,15 +632,7 @@ select:focus {
         transparent
     );
 }
-body.dark .title::before {
-    background-image: linear-gradient(
-        to right,
-        #83f54e,
-        #54f7e1,
-        #5a61e6,
-        #dc4ce6
-    );
-}
+
 .type-film {
     width: 350px;
 }
@@ -695,13 +683,29 @@ body.dark .title::before {
         --rotate: 360deg;
     }
 }
-.table-order-list-online table td,
-.table-order-list-online table th {
+table td,
+table th {
+    vertical-align: middle !important;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
 }
+.action-product {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #695CFE;
+    font-size: 1.3rem;
+    cursor: pointer;
+    color: white;
+}
 
+.action-product.disabled {
+    background-color: #ADA7FB;
+}
 .table-order-list-online thead th {
     color: #fff;
 }

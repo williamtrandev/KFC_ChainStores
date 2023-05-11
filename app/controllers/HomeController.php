@@ -6,8 +6,13 @@ class HomeController extends BaseController
 	{
 		$this->model_home = $this->model("HomeModel");
 	}
+	
 	public function index()
 	{
+		if(!isset($_SESSION['user'])) {
+			header("Location: " . _WEB_ROOT . "/nhanVien/login");
+			exit();
+		}
 		if (json_decode($_SESSION['user'])->chucVu == 'Nhân viên bán hàng') {
 			$this->data['title_page'] = 'Trang bán hàng';
 			$this->data['content'] = ''; // content giữ đường dẫn đến file view

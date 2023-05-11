@@ -41,6 +41,7 @@
 							<th scope="col">Tên món ăn</th>
 							<th scope="col">Số lượng</th>
 							<th scope="col">Giá</th>
+							<th scope="col">Xóa</th>
 						</tr>
 					</thead>
 					<tbody class="tbody-order">
@@ -123,9 +124,9 @@
 				total += parseInt($($(this).find("td")[3]).text());
 				if (rowName === name) {
 					flag = true;
-					let currQuan = parseInt($($(this).find("td")[2]).text());
+					let currQuan = parseInt($($(this).find("input")).val());
 					let currPrice = parseInt($($(this).find("td")[3]).text());
-					$($(this).find("td")[2]).text(currQuan + 1);
+					$($(this).find("input")).val(currQuan + 1);
 					$($(this).find("td")[3]).text(currPrice + price);
 					total += price;
 				}
@@ -133,11 +134,25 @@
 			if (!flag) {
 				let stt = tbody.find("tr").length;
 				let soluong = 1;
+				// let tr = `<tr data-id=${mamonan}>
+				// 				<td>${stt+1}</td>
+				// 				<td>${name}</td>
+				// 				<td>${soluong}</td>
+				// 				<td>${price}</td>
+				// 				<td class="remove-td"><i class="fa-solid fa-trash icon-rm" style="color: #EE0000; cursor: pointer"></i></td>
+				// 			</tr>`;
 				let tr = `<tr data-id=${mamonan}>
 								<td>${stt+1}</td>
 								<td>${name}</td>
-								<td>${soluong}</td>
-								<td>${price}</td>
+								<td>
+								<div class="d-flex wrapper-product justify-content-center align-items-center">
+									<div class='minus-product action-product disabled' style='font-size: 1.8rem'>-</div>
+									<input type='number' value='1' readonly class='num-product' style='text-align: center !important'>
+									<div class='add-product action-product'>+</div>
+								</div>
+								</td>
+								<td data-price=${price}>${price}</td>
+								<td class="remove-td"><i class="fa-solid fa-trash icon-rm" style="color: #EE0000; cursor: pointer"></i></td>
 							</tr>`;
 				tbody.append(tr);
 				total += price;
@@ -146,7 +161,7 @@
 			$(".number-items").text(tbody.find("tr").length);
 			tbody.find("tr").each(function() {
 				let mamonan = $(this).attr("data-id");
-				let soluong = $($(this).find("td")[2]).text();
+				let soluong = $($(this).find("input")).val();
 				listOrder.push({
 					mamonan: mamonan,
 					soluong: soluong
@@ -154,6 +169,57 @@
 			});
 			localStorage.setItem("listOrder", JSON.stringify(listOrder));
 		});
+
+		function updateTotalAndNumItem() {
+			let tbody = $(".tbody-order");
+			let total = 0;
+			let listOrder = [];
+			tbody.find("tr").each(function() {
+				let mamonan = $(this).attr("data-id");
+				let priceBase = parseInt($($(this).find("td")[3]).attr("data-price"));
+				let soluong = parseInt($($(this).find("input")).val());
+				console.log(priceBase);
+				$($(this).find("td")[3]).text(priceBase * soluong)
+				total += parseInt($($(this).find("td")[3]).text());
+				listOrder.push({
+					mamonan: mamonan,
+					soluong: soluong
+				});
+			});
+			localStorage.setItem("listOrder", JSON.stringify(listOrder));
+			let num = tbody.find("tr").length == 0 ? "" : tbody.find("tr").length;
+			total = total == 0 ? "" : total;
+			$(".total_order").text(total);
+			$(".number-items").text(num);
+		}
+		$(".tbody-order").on("click", ".icon-rm", function() {
+			$(this).closest("tr").remove();
+			updateTotalAndNumItem();
+		})
+		$(".tbody-order").on("click", ".add-product", function() {
+			let targetInput = $(this).siblings('.num-product');
+			let numProduct = parseInt(targetInput.val());
+			targetInput.val(numProduct + 1);
+			if (numProduct + 1 > 1) {
+				let minusTarget = $(this).siblings('.minus-product'); // Tìm nút giảm số lượng
+				$(minusTarget).removeClass("disabled");
+			}
+			updateTotalAndNumItem();
+		})
+
+		$(".tbody-order").on("click", ".minus-product", function() {
+			let targetInput = $(this).siblings('.num-product');
+			let numProduct = parseInt(targetInput.val());
+			if (numProduct > 1) {
+
+				targetInput.val(numProduct - 1);
+				if (numProduct - 1 == 1) {
+					$(this).addClass("disabled");
+				}
+				updateTotalAndNumItem();
+			}
+		})
+
 		$(".btn-thanhtoan").click(() => {
 			let sdt = $(".sdt").val() == "" ? "0123456789" : $(".sdt").val();
 			let total = parseInt($(".total_order").text());
@@ -182,5 +248,8 @@
 				})
 				.catch(err => console.log(err))
 		});
+
+
+
 	})
 </script>

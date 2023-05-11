@@ -68,31 +68,7 @@ body {
     background: var(--body-color);
     transition: var(--animate-tran-04);
 }
-body.dark {
-    --body-color: #001232;
-    --sidebar-color: #0c244b;
-    --primary-color: #8925e6;
-    --second-color: #3f6187;
-    --toggle-mode-color: #fff;
-    --text-color: #edb3db;
-    /* --text-color: #abe8f0; */
-    --border-color: #abe8f0;
-    --text-btn: #122cd7;
-    /* --button-background: repeating-linear-gradient(
-        -45deg,
-        #7bdff2 10px 30px,
-        #b2f7ef 30px 50px,
-        #eff7f6 50px 70px,
-        #f7d6e0 70px 90px,
-        #f2b5d4 90px 110px
-    ); */
-    /* --button-background: radial-gradient(
-        circle,
-            rgb(79, 114, 185) 0%,
-        rgb(52, 11, 112) 100%
-    ); */
-    --button-background: linear-gradient(to left bottom, #5ebaee, #dbe3ff, #ecb3fe);
-}
+
 a {
     text-decoration: none !important;
 }

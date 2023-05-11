@@ -51,78 +51,61 @@ trig.forEach((element) => {
 });
 
 
-//--------------------------------------//
-// Xử lý active loại phim
-let typeFilm = $(".button-type-film-showing").toArray();
-let typeClick = $("#all-film-showing"); // Mặc định ban đầu là tất cả film
-typeFilm.forEach((element) => {
-    $(element).click(() => {
-        typeClick.removeClass("active"); // Xóa trạng thái active
-        $(element).addClass("active"); // Thêm trạng thái active
-        typeClick = $(element); // Lưu lại button vừa click
-    });
-});
 
-let typeFilmComing = $(".button-type-film-coming").toArray();
-let typeClickComing = $("#all-film-coming"); // Mặc định ban đầu là tất cả film
-typeFilmComing.forEach((element) => {
-    $(element).click(() => {
-        typeClickComing.removeClass("active"); // Xóa trạng thái active
-        $(element).addClass("active"); // Thêm trạng thái active
-        typeClickComing = $(element); // Lưu lại button vừa click
-    });
-});
+let numProduct = $(".num-product");
+let addBtns = $(".add-product");
+let minusBtns = $(".minus-product");
+let productInfo = $("#product-buying");
 
 
-let prevBtn = $("#pre-btn-slider");
-let nextBtn = $("#next-btn-slider");
-let images = $(".images");
-let items = $(".images .item");
-let contents = $(".content .item");
-let rotate = 0;
-let active = 0;
-let countItem = items.length;
-let rotateAdd = 360 / countItem;
-function nextSlider() {
-    active = active + 1 > countItem - 1 ? 0 : active + 1;
-    rotate = rotate + rotateAdd;
-    show();
-}
-function prevSlider() {
-    active = active - 1 < 0 ? countItem - 1 : active - 1;
-    rotate = rotate - rotateAdd;
-    show();
-}
-function show() {
-    images.css("--rotate", rotate + 'deg');
-    images.css("--rotate", rotate + 'deg');
-    contents.toArray().forEach((content, key) => {
-        if (key == active) {
-            $(content).addClass('active');
+addBtns.click((event) => {
+    let tds = $(event.target).closest("tr").find("td");
+    let price = parseInt(tds.last().text().replaceAll(".", ""));
+    let targetInput = $(event.target).siblings('.num-product');	// Tìm ô input tương ứng
+    let numProduct = parseInt(targetInput.val()) + 1;	// Tăng số lượng
+    targetInput.val(numProduct); 	// Gán lại giá trị cho ô input
+    let minusTarget = $(event.target).siblings('.minus-product');	// Tìm nút giảm số lượng
+    $(minusTarget).removeClass("disabled");	// Xóa class disabled
+    total += price;
+    let tdFirst = $(event.target).closest("tr").find("td")[0]; // Lấy thẻ td đầu tiên để lấy tên sản phẩm
+    let nameProduct = $(tdFirst).find(".name-product").text(); // Lấy tên của sản phẩm
+    let idProduct = $(tdFirst).find(".name-product").attr("id"); // Lấy id của sản phẩm
+    nameProduct = nameProduct + ` (${numProduct})`;
+    // Nếu đã tồn tại thì chỉ cần đổi tên
+    if (checkExist(`.${idProduct}`)) {
+        $(`.${idProduct}`).text(nameProduct);
+    } else {
+        // Nếu không, insert vào
+        let pInsert = `<p class="${idProduct}">${nameProduct}</p>`;
+        productInfo.append(pInsert);
+    }
+    $(".price-total-ticket").text(total.toLocaleString('vi-VN') + " VND");
+})
+minusBtns.click((event) => {
+    let minusTarget = $(event.target);	// Tìm nút giảm số lượng
+    let tds = $(event.target).closest("tr").find("td");
+    let price = parseInt(tds.last().text().replaceAll(".", ""));
+    let targetInput = minusTarget.siblings('.num-product');	// Tìm ô input tương ứng
+    let numProduct = parseInt(targetInput.val());	// Lấy giá trị ô input
+    let tdFirst = $(event.target).closest("tr").find("td")[0]; // Lấy thẻ td đầu tiên để lấy tên sản phẩm
+    let nameProduct = $(tdFirst).find(".name-product").text(); // Lấy tên của sản phẩm
+    let idProduct = $(tdFirst).find(".name-product").attr("id"); // Lấy id của sản phẩm
+    if (numProduct > 0) {	// Nếu số lượng hiện tại lớn hơn 0 thì mới làm tiếp
+        numProduct = parseInt(targetInput.val()) - 1;	// Giảm giá trị số lượng
+        targetInput.val(numProduct); 	// Gán lại giá trị
+        total -= price;
+        if (numProduct == 0) {	// Nếu số lượng là 0 thì disabled nút giảm
+            minusTarget.addClass("disabled");
+            $(`.${idProduct}`).remove();
         } else {
-            $(content).removeClass('active');
+            nameProduct = nameProduct + ` (${numProduct})`;
+            // Đổi tên số lượng
+            $(`.${idProduct}`).text(nameProduct);
         }
-    })
-}
-nextBtn.click(nextSlider);
-prevBtn.click(prevSlider);
-const autoNext = setInterval(nextSlider, 4000);
-
-
-//--------------------------------------//
-// Xử lí dark mode. //
-(() => {
-    const storedTheme = localStorage.getItem("theme");  // Lấy giá trị theme được lưu ở local storage
-    // Nếu giá trị theme đã lưu là dark thì bật dark mode. Các trường hợp khác là light mode.
-    const setTheme = function () {
-        if (
-            window.matchMedia("(prefers-color-scheme: dark)").matches ||
-            storedTheme === "dark"
-        ) {
-            $("body").addClass("dark");
-        } else {
-            $("body").removeClass("dark");
+        if (productInfo.find("p").length == 0) {
+            productInfo.append("<p class='msg-has-no'>Chưa chọn sản phẩm nào</p>");
         }
-    };
-    setTheme();
-})();
+        $(".price-total-ticket").text(total.toLocaleString('vi-VN') + " VND");
+    }
+
+})
