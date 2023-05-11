@@ -1,1 +1,0 @@
-This project was completed by me and my friend - Nguyen Phuc Sy Luan (github page: https://github.com/LuanardoDX)
