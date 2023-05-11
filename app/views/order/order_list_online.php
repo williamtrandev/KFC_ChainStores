@@ -100,19 +100,34 @@
 
 		})
 		$(".btn-xacnhandonhang").click(() => {
-			let trangthai = "Đang xử lý";
-			fetch(`<?php echo _WEB_ROOT ?>/donHang/updateTrangThaiDonHang/${maDonHangClick}/${trangthai}`)
-				.then(res => res.text())
-				.then(data => {
-					if (data == 1) {
-						alert("Đã xác nhận đơn hàng");
-						fetchGetAllDonHangOnline();
-						$("#modalOrderList").modal("hide");
-					} else {
-						alert("Đã có gì đó xảy ra");
-					}
-				})
-				.catch(err => alert(err))
-		})
+				let trangthai = "Đang xử lý";
+				fetch(`<?php echo _WEB_ROOT ?>/donHang/updateTrangThaiDonHang/${maDonHangClick}/${trangthai}`)
+					.then(res => res.text())
+					.then(data => {
+						if (data == 1) {
+							alert("Đã xác nhận đơn hàng");
+							fetchGetAllDonHangOnline();
+							$("#modalOrderList").modal("hide");
+						} else {
+							alert("Đã có gì đó xảy ra");
+						}
+					})
+					.catch(err => alert(err))
+			})
+			.$(".btn-huydonhang").click(() => {
+				let trangthai = "Đã hủy";
+				fetch(`<?php echo _WEB_ROOT ?>/donHang/updateTrangThaiDonHang/${maDonHangClick}/${trangthai}`)
+					.then(res => res.text())
+					.then(data => {
+						if (data == 1) {
+							alert("Đã hủy đơn hàng");
+							fetchGetAllDonHangOnline();
+							$("#modalOrderList").modal("hide");
+						} else {
+							alert("Đã có gì đó xảy ra");
+						}
+					})
+					.catch(err => alert(err))
+			})
 	})
 </script>
