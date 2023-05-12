@@ -19,10 +19,10 @@ class NhanVienController extends BaseController
 			if ($user['authenticate']) {
 				$_SESSION['user'] = $this->model("NhanVienModel")->getDetailByPhone($username);
 				if ($user['roleStaff'] == 'qlt') {
-					header("Location: " . _WEB_ROOT . "/admin");
+					header("Location: " . _WEB_ROOT . "/quanLyTong");
 					exit();
 				} else if ($user['roleStaff'] == 'ql') {
-					header("Location: " . _WEB_ROOT . "/home");
+					header("Location: " . _WEB_ROOT . "/quanLy");
 					exit();
 				} else {
 					header("Location: " . _WEB_ROOT . "/home");
@@ -48,7 +48,11 @@ class NhanVienController extends BaseController
 		header("Location: " . _WEB_ROOT . "/nhanVien/login");
 		exit();
 	}
-	public function getAllNhanVienGiaoHang($macuahang) {
-		echo $this-> model_user->getAllNhanVienGiaoHang($macuahang);
+	public function getAllNhanVienGiaoHang($macuahang)
+	{
+		echo $this->model_user->getAllNhanVienGiaoHang($macuahang);
+	}
+	public function adminChain()
+	{
 	}
 }

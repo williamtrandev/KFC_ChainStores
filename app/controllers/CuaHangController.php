@@ -4,7 +4,7 @@ class CuaHangController extends BaseController
 	public $model_res, $data = [];
 	public function __construct()
 	{
-		$this->model_res = $this->model("TheaterModel");
+		$this->model_res = $this->model("CuaHangModel");
 	}
 	public function index()
 	{

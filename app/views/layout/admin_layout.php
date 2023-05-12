@@ -68,43 +68,35 @@
 			<div class="my-sidebar">
 				<div class="top">
 					<div class="logo">
-						<div style="width: 50px; height: 50px; border-radius: 10px; background-color: #695cfe; color: #f6f5ff; font-weight: 600; display: flex; justify-content: center; align-items: center; font-size: 1.4rem">W</div>
-						<h2><span>WILL CINEMA</span></h2>
+						<div style="width: 50px; height: 50px; border-radius: 10px; background-color: #695cfe; color: #f6f5ff; font-weight: 600; display: flex; justify-content: center; align-items: center; font-size: 1.4rem">KFC</div>
+						<h2><span>William & Luanado</span></h2>
 					</div>
 					<div class="close" id="close-btn">
 						<span class="material-icons-sharp">close</span>
 					</div>
 				</div>
-				<a href="<?php echo _WEB_ROOT ?>/admin/ticketList">
-					<span class="material-icons-sharp">local_activity</span>
-					<h3>Thay đổi giá vé</h3>
+
+				<a href="<?php echo _WEB_ROOT ?>/admin">
+					<span class="material-icons-sharp">query_stats</span>
+					<h3>Xem thống kê lợi nhuận</h3>
 				</a>
-				<a href="<?php echo _WEB_ROOT ?>/admin/filmList">
-					<span class="material-icons-sharp">movie</span>
-					<h3>Danh sách phim</h3>
-				</a>
-				<a href="<?php echo _WEB_ROOT ?>/admin/theaterList">
-					<span class="material-icons-sharp">location_on</span>
-					<h3>Danh sách rạp</h3>
+				<a href="<?php echo _WEB_ROOT ?>/admin/foodList">
+					<span class="material-icons-sharp">store</span>
+					<h3>Quản lý kho</h3>
 				</a>
 				<a href="<?php echo _WEB_ROOT ?>/admin/foodList">
 					<span class="material-icons-sharp">fastfood</span>
 					<h3>Quản lý món ăn</h3>
 				</a>
-
-				<a href="<?php echo _WEB_ROOT ?>/admin/customerList/1">
+				<a href="<?php echo _WEB_ROOT ?>/quanLy/staffList">
 					<span class="material-icons-sharp">people</span>
-					<h3>Khách hàng</h3>
+					<h3>Quản lý nhân viên</h3>
 				</a>
-				<a href="<?php echo _WEB_ROOT ?>/admin/historyList/1">
-					<span class="material-icons-sharp">receipt</span>
-					<h3>Lịch sử đặt vé</h3>
+				<a href="<?php echo _WEB_ROOT ?>/admin/customerList/1">
+					<span class="material-icons-sharp">history</span>
+					<h3>Lịch sử giao dịch</h3>
 				</a>
-				<a href="<?php echo _WEB_ROOT ?>/admin">
-					<span class="material-icons-sharp">bar_chart</span>
-					<h3>Doanh thu</h3>
-				</a>
-				<a href="<?php echo _WEB_ROOT ?>/user/logout">
+				<a href="<?php echo _WEB_ROOT ?>/nhanVien/logout">
 					<span class="material-icons-sharp">logout</span>
 					<h3>Đăng xuất</h3>
 				</a>
@@ -112,18 +104,13 @@
 		</aside>
 		<main>
 			<div class="wrapper-date-user">
-
 				<div class=" top">
 					<button id="menu-btn">
 						<span class="material-icons-sharp">menu</span>
 					</button>
-					<div class="theme-toggler">
-						<span class="material-icons-sharp active">light_mode</span>
-						<span class="material-icons-sharp">dark_mode</span>
-					</div>
 					<div class="profile d-md-flex align-items-center">
 						<div class="info d-flex align-items-center">
-							<span style="color: var(--color-dark)">Chào,</span> <b><?php echo json_decode($_SESSION['user'])->name ?></b>
+							<span style="color: var(--color-dark)">Chào,</span> <b><?php echo json_decode($_SESSION['user'])->tenNhanVien ?></b>
 						</div>
 						<div class="profile-photo">
 							<img src="<?php echo _WEB_ROOT; ?>/public/assets/client/img/user.png">
@@ -135,7 +122,11 @@
 			<?php
 			if (!isset($info))
 				$info = '';
-			$this->render($content, ['data' => $data_pass, 'info' => $info]);
+			if (isset($nvbh)) {
+				$this->render($content, ['data' => $data_pass, 'info' => $info, 'nvbh' => $nvbh, 'nvgh' => $nvgh, 'db' => $db]);
+			} else {
+				$this->render($content, ['data' => $data_pass, 'info' => $info]);
+			}
 			?>
 
 
