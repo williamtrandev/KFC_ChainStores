@@ -67,13 +67,38 @@ class NhanVienModel extends BaseModel
 		}
 		return json_encode($data);
 	}
-	public function getAllNhanVienGiaoHang($macuahang) {
+	public function getAllNhanVienGiaoHang($macuahang)
+	{
 		$res = $this->db->prepare("select * from nhanvien where macuahang = ? and chucVu = 'Nhân viên giao hàng'");
 		$res->bind_param('i', $macuahang);
 		$res->execute();
 		$result = $res->get_result();
 		$data = [];
-		while($row = $result->fetch_assoc()) {
+		while ($row = $result->fetch_assoc()) {
+			$data[] = $row;
+		}
+		return json_encode($data);
+	}
+	public function getAllNhanVienBanHang($macuahang)
+	{
+		$res = $this->db->prepare("select * from nhanvien where macuahang = ? and chucVu = 'Nhân viên bán hàng'");
+		$res->bind_param('i', $macuahang);
+		$res->execute();
+		$result = $res->get_result();
+		$data = [];
+		while ($row = $result->fetch_assoc()) {
+			$data[] = $row;
+		}
+		return json_encode($data);
+	}
+	public function getAllDauBep($macuahang)
+	{
+		$res = $this->db->prepare("select * from nhanvien where macuahang = ? and chucVu = 'Đầu bếp'");
+		$res->bind_param('i', $macuahang);
+		$res->execute();
+		$result = $res->get_result();
+		$data = [];
+		while ($row = $result->fetch_assoc()) {
 			$data[] = $row;
 		}
 		return json_encode($data);
