@@ -4,6 +4,9 @@ class QuanLyController extends BaseController
 	public $data = [];
 	public function index()
 	{
+		if(!isset($_SESSION['user'])) {
+			header("Location: ". _WEB_ROOT."/nhanVien/login");
+		}
 		$this->data['title_page'] = 'Thống kê lợi nhuận';
 		$this->data['content'] = 'admin/thongkeloinhuan';
 		$this->data['data_pass'] = '';
@@ -11,6 +14,9 @@ class QuanLyController extends BaseController
 	}
 	public function staffList()
 	{
+		if (!isset($_SESSION['user'])) {
+			header("Location: " . _WEB_ROOT . "/nhanVien/login");
+		}
 		$maCuaHang = json_decode($_SESSION['user'])->maCuaHang;
 		$this->data['title_page'] = 'Quản lý nhân viên';
 		$this->data['content'] = 'admin/quanlynhanvien';
@@ -21,11 +27,39 @@ class QuanLyController extends BaseController
 		// $this->data['data_pass'] = json_decode($this->model("NhanVienModel")->getAll());
 		$this->render("layout/admin_layout", $this->data);
 	}
+	public function historyList()
+	{
+		if (!isset($_SESSION['user'])) {
+			header("Location: " . _WEB_ROOT . "/nhanVien/login");
+		}
+		$maCuaHang = json_decode($_SESSION['user'])->maCuaHang;
+		$this->data['title_page'] = 'Lịch sử giao dịch';
+		$this->data['content'] = 'admin/lichsugiaodich';
+		$dh = json_decode($this->model("DonHangModel")->getAllDonHangDaBan($maCuaHang, 1));
+		$dho = json_decode($this->model("DonHangModel")->getAllDonHangOnlineDaBan($maCuaHang, 1));
+		$this->data['data_pass'] = '';
+		$this->data['dh'] = $dh;
+		$this->data['dho'] = $dho;
+		$this->data['ndh'] = $this->model("DonHangModel")->getNumberDonHangDaBan($maCuaHang);
+		$this->data['ndho'] = $this->model("DonHangModel")->getNumberDonHangOnlineDaBan($maCuaHang);
+		$this->render("layout/admin_layout", $this->data);
+	}
 	public function foodList()
 	{
+		if (!isset($_SESSION['user'])) {
+			header("Location: " . _WEB_ROOT . "/nhanVien/login");
+		}
 		$this->data['title_page'] = 'Danh sách món ăn';
-		$this->data['content'] = 'admin/foodlist';
-		$this->data['data_pass'] = json_decode($this->model("FoodModel")->getAll());
+		$this->data['content'] = 'admin/quanlymonan';
+		$this->data['data_pass'] = '';
+		$this->data['qlma'] = '';
+		$this->data['monmoi'] = json_decode($this->model("MonAnModel")->getMonAnById(1));
+		$this->data['cb1'] = json_decode($this->model("MonAnModel")->getMonAnById(2));
+		$this->data['cbn'] = json_decode($this->model("MonAnModel")->getMonAnById(3));
+		$this->data['gr_gq'] = json_decode($this->model("MonAnModel")->getMonAnById(4));
+		$this->data['bg'] = json_decode($this->model("MonAnModel")->getMonAnById(5));
+		$this->data['tan'] = json_decode($this->model("MonAnModel")->getMonAnById(6));
+		$this->data['tu'] = json_decode($this->model("MonAnModel")->getMonAnById(7));
 		$this->render("layout/admin_layout", $this->data);
 	}
 }

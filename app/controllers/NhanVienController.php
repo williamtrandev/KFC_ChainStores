@@ -35,11 +35,6 @@ class NhanVienController extends BaseController
 			}
 		}
 	}
-	public function update($name, $email, $birthday)
-	{
-		$id_khachhang = json_decode($_SESSION['user'])->id_khachhang;
-		echo $this->model_user->updateInfo($name, $email, $birthday, $id_khachhang);
-	}
 	public function logout()
 	{
 		// Xóa session
@@ -52,7 +47,17 @@ class NhanVienController extends BaseController
 	{
 		echo $this->model_user->getAllNhanVienGiaoHang($macuahang);
 	}
-	public function adminChain()
+	public function insert($tennv, $gioitinh, $ngaysinh, $sdt, $diachi, $chucVu, $matkhau)
 	{
+		$maCuaHang = json_decode($_SESSION['user'])->maCuaHang;
+		echo $this->model_user->insert($tennv, $gioitinh, $ngaysinh, $sdt, $diachi, $chucVu, $maCuaHang, $matkhau);
+	}
+	public function update($tennv, $gioitinh, $ngaysinh, $diachi, $chucVu, $matkhau, $manv)
+	{
+		echo $this->model_user->update($tennv, $gioitinh, $ngaysinh, $diachi, $chucVu, $matkhau, $manv);
+	}
+	public function delete($manv)
+	{
+		echo $this->model_user->delete($manv);
 	}
 }

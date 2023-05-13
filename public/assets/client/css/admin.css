@@ -61,7 +61,24 @@ body {
     user-select: none;
     overflow-x: hidden;
 }
+body::-webkit-scrollbar {
+    width: 20px;
+}
 
+body::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: #a8bbbf;
+    border-radius: 15px;
+    border: 6px solid transparent;
+    background-clip: content-box;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+    background-color: #8fb5bd;
+}
 .my-container {
     display: grid;
     width: 96%;
@@ -179,6 +196,7 @@ aside .my-sidebar {
 }
 
 aside h3 {
+    font-size: 1.15rem;
     font-weight: 500;
 }
 
@@ -239,7 +257,8 @@ aside .my-sidebar a:hover span {
 
 /* ---------------- MAIN ---------------*/
 main {
-    margin-top: 1.4rem;
+    margin-top: 1.5rem;
+    margin-bottom: 4rem;
 }
 
 main .date {
@@ -348,11 +367,13 @@ main .staticFilm .head {
 }
 
 main .staticFilm table tbody td {
-    padding: 15px 0;
+    padding: 15px;
     border-bottom: 1px solid var(--color-light);
     color: var(--color-dark-variant);
 }
-
+th {
+    padding: 15px;
+}
 main .staticFilm table tbody td.image {
     text-align: center;
 }
@@ -624,16 +645,15 @@ main .staticFilm a {
     float: left;
     padding: 8px 16px;
     text-decoration: none;
+    background-color: white;
     transition: background-color .3s;
     border: 1px solid #ddd;
 }
 
-.pagination a.active {
-    background-color: var(--color-primary);
-    color: white;
-    border: 1px solid var(--color-primary);
-}
-
 .pagination a:hover:not(.active) {
     background-color: #ddd;
+}
+
+.text-reset {
+    font-size: initial;
 }

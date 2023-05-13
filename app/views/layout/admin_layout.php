@@ -16,49 +16,6 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 	<title><?php echo $title_page ?></title>
-	<script>
-		$(function() {
-			fetch(`<?php echo _WEB_ROOT ?>/admin/getAllFilmHistory`)
-				.then(res => res.json())
-				.then(data => {
-					let totalPages = Math.ceil(data / 10);
-					$(".pagination-revenue").append($('<a></a>').text(1).attr('href', '#').addClass("active"));
-					for (let i = 2; i <= totalPages; i++) {
-						$(".pagination-revenue").append($('<a></a>').text(i).attr('href', '#'));
-					}
-				});
-			$("input[type='date']").change(function() {
-				let start = $("#date-start").val();
-				let end = $("#date-end").val();
-				console.log(start);
-				if (start && end) {
-					fetch(`<?php echo _WEB_ROOT ?>/admin/getTotalRevenue/${start}/${end}`)
-						.then(res => res.json())
-						.then(data => {
-							$(".total-revenue").text(data.toLocaleString('vi-VN') + " VND")
-						});
-					fetch(`<?php echo _WEB_ROOT ?>/admin/getInfoRevenue/${start}/${end}`)
-						.then(res => res.json())
-						.then(data => {
-							let i = 1;
-							$(".body-revenue").children().remove();
-							data.forEach(element => {
-								let tongtien = parseInt(element.tongtien).toLocaleString('vi-VN');
-								$(".body-revenue").append(
-									`<tr>
-									<td>${i}</td>
-									<td>${element.name_phim}</td>
-									<td>${element.soluong}</td>
-									<td class="total">${tongtien}</td>
-								</tr>`
-								);
-								i++;
-							});
-						})
-				}
-			})
-		})
-	</script>
 </head>
 
 <body>
@@ -76,15 +33,15 @@
 					</div>
 				</div>
 
-				<a href="<?php echo _WEB_ROOT ?>/admin">
+				<a href="<?php echo _WEB_ROOT ?>/quanLy/index">
 					<span class="material-icons-sharp">query_stats</span>
 					<h3>Xem thống kê lợi nhuận</h3>
 				</a>
-				<a href="<?php echo _WEB_ROOT ?>/admin/foodList">
+				<a href="<?php echo _WEB_ROOT ?>/quanLy/foodList">
 					<span class="material-icons-sharp">store</span>
 					<h3>Quản lý kho</h3>
 				</a>
-				<a href="<?php echo _WEB_ROOT ?>/admin/foodList">
+				<a href="<?php echo _WEB_ROOT ?>/quanLy/foodList">
 					<span class="material-icons-sharp">fastfood</span>
 					<h3>Quản lý món ăn</h3>
 				</a>
@@ -92,7 +49,7 @@
 					<span class="material-icons-sharp">people</span>
 					<h3>Quản lý nhân viên</h3>
 				</a>
-				<a href="<?php echo _WEB_ROOT ?>/admin/customerList/1">
+				<a href="<?php echo _WEB_ROOT ?>/quanLy/historyList">
 					<span class="material-icons-sharp">history</span>
 					<h3>Lịch sử giao dịch</h3>
 				</a>
@@ -108,7 +65,7 @@
 					<button id="menu-btn">
 						<span class="material-icons-sharp">menu</span>
 					</button>
-					<div class="profile d-md-flex align-items-center">
+					<div class="profile d-md-flex align-items-center" style="font-size: 1.2rem">
 						<div class="info d-flex align-items-center">
 							<span style="color: var(--color-dark)">Chào,</span> <b><?php echo json_decode($_SESSION['user'])->tenNhanVien ?></b>
 						</div>
@@ -122,7 +79,11 @@
 			<?php
 			if (!isset($info))
 				$info = '';
-			if (isset($nvbh)) {
+			if (isset($qlma)) {
+				$this->render($content, ['data' => $data_pass, 'info' => $info, 'monmoi' => $monmoi, 'cb1' => $cb1, 'cbn' => $cbn, 'gr_gq' => $gr_gq, 'bg' => $bg, 'tan' => $tan, 'tu' => $tu]);
+			} else if (isset($dh)) {
+				$this->render($content, ['data' => $data_pass, 'info' => $info, 'dh' => $dh, 'dho' => $dho, 'ndh' => $ndh, 'ndho' => $ndho]);
+			} else if (isset($nvbh)) {
 				$this->render($content, ['data' => $data_pass, 'info' => $info, 'nvbh' => $nvbh, 'nvgh' => $nvgh, 'db' => $db]);
 			} else {
 				$this->render($content, ['data' => $data_pass, 'info' => $info]);

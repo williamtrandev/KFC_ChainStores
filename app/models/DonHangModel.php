@@ -28,7 +28,8 @@ class DonHangModel extends BaseModel
 		}
 		return json_encode($data);
 	}
-	public function getAllDonHangCanLam($maCuaHang) {
+	public function getAllDonHangCanLam($maCuaHang)
+	{
 		$res = $this->db->prepare("select * from donhang dh where trangThai = 'Đang xử lý' and dh.maCuaHang=?");
 		$res->bind_param("i", $maCuaHang);
 		$res->execute();
@@ -50,6 +51,48 @@ class DonHangModel extends BaseModel
 			$data[] = $row;
 		}
 		return json_encode($data);
+	}
+	public function getAllDonHangDaBan($maCuaHang, $page)
+	{
+		$perpage = 10;
+		$offset = ($page - 1) * $perpage;
+		$res = $this->db->prepare("select * from donhang dh join nhanvien nv on dh.maNhanVien = nv.maNhanVien where trangthai = 'Hoàn thành' and dh.maCuaHang=? and dh.maDonHang not in (select maDonHang from donhangonline) order by dh.maDonHang desc limit $offset, $perpage");
+		$res->bind_param("i", $maCuaHang);
+		$res->execute();
+		$result = $res->get_result();
+		$data = [];
+		while ($row = $result->fetch_assoc()) {
+			$data[] = $row;
+		}
+		return json_encode($data);
+	}
+	public function getAllDonHangOnlineDaBan($maCuaHang, $page)
+	{
+		$perpage = 10;
+		$offset = ($page - 1) * $perpage;
+		$res = $this->db->prepare("select dh.maDonHang, sdtKhachHang, ngayLap, tongTien, nv.tenNhanVien, nv2.tenNhanVien as tenNhanVienGiao, dho.diaChiGiaoHang from donhangonline dho join donhang dh on dho.maDonHang = dh.maDonHang join nhanvien nv on nv.maNhanVien = dh.maNhanVien join nhanvien nv2 on nv2.maNhanVien = dho.maNhanVienGiao where dh.trangthai = 'Hoàn thành' and dh.maCuaHang=? order by dh.maDonHang desc limit $offset, $perpage");
+		$res->bind_param("i", $maCuaHang);
+		$res->execute();
+		$result = $res->get_result();
+		$data = [];
+		while ($row = $result->fetch_assoc()) {
+			$data[] = $row;
+		}
+		return json_encode($data);
+	}
+	public function getNumberDonHangDaBan($maCuaHang) {
+		$res = $this->db->prepare("select count(*) as soluong from donhang dh where trangthai = 'Hoàn thành' and dh.maCuaHang=? and dh.maDonHang not in (select maDonHang from donhangonline)");
+		$res->bind_param("i", $maCuaHang);
+		$res->execute();
+		$result = $res->get_result()->fetch_assoc();
+		return $result['soluong'];
+	}
+	public function getNumberDonHangOnlineDaBan($maCuaHang) {
+		$res = $this->db->prepare("select count(*) as soluong from donhangonline dho join donhang dh on dho.maDonHang = dh.maDonHang where trangthai = 'Hoàn thành' and dh.maCuaHang=?");
+		$res->bind_param("i", $maCuaHang);
+		$res->execute();
+		$result = $res->get_result()->fetch_assoc();
+		return $result['soluong'];
 	}
 	public function updateNhanVienGiao($maDonHang, $maNhanVien)
 	{
