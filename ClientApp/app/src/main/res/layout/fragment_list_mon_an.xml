@@ -15,12 +15,17 @@
             android:id="@+id/tab_loaiMonAn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabMode="scrollable"/>
+            app:tabGravity="fill"
+            app:tabMode="scrollable" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcv_monAn"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="#7380EC"
+            android:paddingLeft="10dp" />
+
     </LinearLayout>
+
 
 </FrameLayout>

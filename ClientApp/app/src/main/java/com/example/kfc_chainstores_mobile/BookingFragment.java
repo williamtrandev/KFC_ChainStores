@@ -131,13 +131,14 @@ public class BookingFragment extends Fragment {
                         CuaHang cuaHang = new CuaHang(maCuaHang, tenCuaHang, chiNhanh);
 
                         cuaHangList.add(cuaHang);
-                        requireActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                adapter.notifyDataSetChanged();
-                            }
-                        });
                     }
+
+                    requireActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
 
                 } catch (JSONException e) {
                     Log.d("onResponse", e.getMessage());
