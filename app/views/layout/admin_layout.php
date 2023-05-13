@@ -37,7 +37,7 @@
 					<span class="material-icons-sharp">query_stats</span>
 					<h3>Xem thống kê lợi nhuận</h3>
 				</a>
-				<a href="<?php echo _WEB_ROOT ?>/quanLy/foodList">
+				<a href="<?php echo _WEB_ROOT ?>/quanLy/storehouse">
 					<span class="material-icons-sharp">store</span>
 					<h3>Quản lý kho</h3>
 				</a>
@@ -79,7 +79,11 @@
 			<?php
 			if (!isset($info))
 				$info = '';
-			if (isset($qlma)) {
+			if (isset($qlk)) {
+				$this->render($content, ['info' => $info, 'hh' => $hh, 'ncc'=>$ncc]);
+			} else if (isset($tkln)) {
+				$this->render($content, ['data' => $data_pass, 'info' => $info, 'ndh' => $ndh, 'tongdt' => $tongdt]);
+			} else if (isset($qlma)) {
 				$this->render($content, ['data' => $data_pass, 'info' => $info, 'monmoi' => $monmoi, 'cb1' => $cb1, 'cbn' => $cbn, 'gr_gq' => $gr_gq, 'bg' => $bg, 'tan' => $tan, 'tu' => $tu]);
 			} else if (isset($dh)) {
 				$this->render($content, ['data' => $data_pass, 'info' => $info, 'dh' => $dh, 'dho' => $dho, 'ndh' => $ndh, 'ndho' => $ndho]);

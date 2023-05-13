@@ -6,7 +6,9 @@ class DonHangController extends BaseController
 	{
 		$this->model_dh = $this->model("DonHangModel");
 	}
-
+	public function getAllDonHang($maCuaHang, $page) {
+		echo $this->model_dh->getAllDonHang($maCuaHang, $page);
+	}
 	public function getAllDonHangOnline($maCuaHang)
 	{
 		echo $this->model_dh->getAllDonHangOnline($maCuaHang);
@@ -49,5 +51,8 @@ class DonHangController extends BaseController
 	public function getNumberDonHangOnlineDaBan($maCuaHang)
 	{
 		echo $this->model_dh->getNumberDonHangOnlineDaBan($maCuaHang);
+	}
+	public function getTotalRevenue($maCuaHang) {
+		echo $this->model_dh->getTotalRevenue($maCuaHang);
 	}
 }

@@ -10,6 +10,10 @@ class QuanLyController extends BaseController
 		$this->data['title_page'] = 'Thống kê lợi nhuận';
 		$this->data['content'] = 'admin/thongkeloinhuan';
 		$this->data['data_pass'] = '';
+		$this->data['tkln'] = '';
+		$this->data['ndh'] = json_decode($this->model("DonHangModel")->getNumberDonHang(json_decode($_SESSION['user'])->maCuaHang));
+		$this->data['tongdt'] = json_decode($this->model("DonHangModel")->getTotalRevenue(json_decode($_SESSION['user'])->maCuaHang));
+
 		$this->render("layout/admin_layout", $this->data);
 	}
 	public function staffList()
@@ -61,5 +65,18 @@ class QuanLyController extends BaseController
 		$this->data['tan'] = json_decode($this->model("MonAnModel")->getMonAnById(6));
 		$this->data['tu'] = json_decode($this->model("MonAnModel")->getMonAnById(7));
 		$this->render("layout/admin_layout", $this->data);
+	}
+	public function storehouse() {
+		if (!isset($_SESSION['user'])) {
+			header("Location: " . _WEB_ROOT . "/nhanVien/login");
+		}
+		$maCuaHang = json_decode($_SESSION['user'])->maCuaHang;
+		$this->data['title_page'] = 'Quản lý kho';
+		$this->data['content'] = 'admin/quanlykho';
+		$this->data['qlk'] = '';
+		$this->data['hh'] = json_decode($this->model("HangHoaModel")->getAll());
+		$this->data['ncc'] = json_decode($this->model("NhaCungCapModel")->getAll($maCuaHang));
+		$this->render("layout/admin_layout", $this->data);
+
 	}
 }

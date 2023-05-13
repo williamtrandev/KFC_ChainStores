@@ -8,6 +8,20 @@ class DonHangModel extends BaseModel
 		$res->execute();
 		return $res->affected_rows == 1;
 	}
+	public function getAllDonHang($maCuaHang, $page)
+	{
+		$perpage = 10;
+		$offset = ($page - 1) * $perpage;
+		$res = $this->db->prepare("select * from donhang dh join nhanvien nv on dh.maNhanVien = nv.maNhanVien where trangthai = 'Hoàn thành' and MONTH(ngayLap) = MONTH(CURDATE()) and dh.maCuaHang=? order by dh.maDonHang desc limit $offset, $perpage");
+		$res->bind_param("i", $maCuaHang);
+		$res->execute();
+		$result = $res->get_result();
+		$data = [];
+		while ($row = $result->fetch_assoc()) {
+			$data[] = $row;
+		}
+		return json_encode($data);
+	}
 	public function getMaDonHangMoiNhat($maCuaHang)
 	{
 		$res = $this->db->prepare("select maDonHang from donhang where maCuaHang=? order by maDonHang desc limit 1");
@@ -80,14 +94,24 @@ class DonHangModel extends BaseModel
 		}
 		return json_encode($data);
 	}
-	public function getNumberDonHangDaBan($maCuaHang) {
+	public function getNumberDonHang($maCuaHang)
+	{
+		$res = $this->db->prepare("select count(*) as soluong from donhang dh where trangthai = 'Hoàn thành' and dh.maCuaHang=?");
+		$res->bind_param("i", $maCuaHang);
+		$res->execute();
+		$result = $res->get_result()->fetch_assoc();
+		return $result['soluong'];
+	}
+	public function getNumberDonHangDaBan($maCuaHang)
+	{
 		$res = $this->db->prepare("select count(*) as soluong from donhang dh where trangthai = 'Hoàn thành' and dh.maCuaHang=? and dh.maDonHang not in (select maDonHang from donhangonline)");
 		$res->bind_param("i", $maCuaHang);
 		$res->execute();
 		$result = $res->get_result()->fetch_assoc();
 		return $result['soluong'];
 	}
-	public function getNumberDonHangOnlineDaBan($maCuaHang) {
+	public function getNumberDonHangOnlineDaBan($maCuaHang)
+	{
 		$res = $this->db->prepare("select count(*) as soluong from donhangonline dho join donhang dh on dho.maDonHang = dh.maDonHang where trangthai = 'Hoàn thành' and dh.maCuaHang=?");
 		$res->bind_param("i", $maCuaHang);
 		$res->execute();
@@ -107,5 +131,12 @@ class DonHangModel extends BaseModel
 		$res->bind_param("si", $trangThai, $maDonHang);
 		$res->execute();
 		return $res->affected_rows == 1;
+	}
+	public function getTotalRevenue($maCuaHang)
+	{
+		$res = $this->db->prepare("select sum(tongTien) as tongDoanhThu from donhang where trangThai = 'Hoàn thành' and MONTH(ngayLap) = MONTH(CURDATE()) and maCuaHang = ?");
+		$res->bind_param("i", $maCuaHang);
+		$res->execute();
+		return $res->get_result()->fetch_assoc()['tongDoanhThu'];
 	}
 }

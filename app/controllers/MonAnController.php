@@ -11,17 +11,19 @@ class MonAnController extends BaseController
 		$name = $_POST['name-add'];
 		$detail = $_POST['detail-add'];
 		$price = $_POST['price-add'];
+		$loaimon = $_POST['loaimon-add'];
 		$target_dir = 'public/assets/client/img/';
 		$image_path = $_FILES['image_path-add']['name'];
 		$target_file = $target_dir . basename($image_path);
 		move_uploaded_file($_FILES['image_path-add']['tmp_name'], $target_file);
-		echo $this->model_food->insert($name, $detail, $price, $image_path);
+		echo $this->model_food->insert($name, $detail, $price, $image_path, $loaimon);
 	}
 	public function update() {
-		$id_combo = $_POST['id_combo'];
+		$mamonan = $_POST['maMonAn'];
 		$name = $_POST['name'];
 		$detail = $_POST['detail'];
 		$price = $_POST['price'];
+		$loaimon = $_POST['loaimon'];
 		$target_dir = 'public/assets/client/img/';
 		$image_path = $_FILES['image_path']['name'];
 		if ($image_path != '') {
@@ -29,10 +31,10 @@ class MonAnController extends BaseController
 			$target_file = $target_dir . basename($image_path);
 			move_uploaded_file($_FILES['image_path']['tmp_name'], $target_file);
 		}
-		echo $this->model_food->update($name, $detail, $price, $image_path, $id_combo);
+		echo $this->model_food->update($name, $detail, $price, $image_path, $loaimon, $mamonan);
 	}
-	public function delete($id_combo) {
-		echo $this->model_food->delete($id_combo);
+	public function delete($mamonan) {
+		echo $this->model_food->delete($mamonan);
 	}
 	public function getMonAnById($id) {
 		echo $this->model_food->getMonAnById($id);
