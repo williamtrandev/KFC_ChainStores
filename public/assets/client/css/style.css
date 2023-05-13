@@ -520,6 +520,7 @@ header .header-text {
     padding-top: 20px;
     position: relative;
     width: calc(100% - 250px);
+    min-height: 100vh;
     left: 250px;
     background: var(--body-color);
     transition: var(--animate-tran-05);

@@ -38,7 +38,35 @@
 </div>
 <!-- ===================== THỐNG KÊ THEO PHIM ===================== -->
 <div class="staticFilm">
-	<h1>Doanh thu theo phim</h1>
+	<h1>Doanh thu bán hàng</h1>
+	<table>
+		<thead>
+			<th>STT</th>
+			<th>Mã đơn hàng</th>
+			<th>Ngày lập</th>
+			<th>Tổng tiền</th>
+		</thead>
+		<tbody class="body-revenue">
+
+		</tbody>
+	</table>
+</div>
+<div class="staticFilm">
+	<h1>Chi phí hàng</h1>
+	<table>
+		<thead>
+			<th>STT</th>
+			<th>Mã phiếu nhập</th>
+			<th>Ngày nhập</th>
+			<th>Tổng tiền</th>
+		</thead>
+		<tbody class="body-revenue">
+
+		</tbody>
+	</table>
+</div>
+<div class="staticFilm">
+	<h1>Doanh thu bán hàng</h1>
 	<table>
 		<thead>
 			<th>STT</th>

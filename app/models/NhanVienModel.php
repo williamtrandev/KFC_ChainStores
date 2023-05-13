@@ -50,26 +50,9 @@ class NhanVienModel extends BaseModel
 		$user = $data->get_result();
 		return $user->num_rows == 1;
 	}
-	public function updateInfo($name, $email, $birthday, $id_khachhang)
-	{
-		$data = $this->db->prepare("update khachhang set name=?, email=?, birthday=? where id_khachhang=?");
-		$data->bind_param("sssi", $name, $email, $birthday, $id_khachhang);
-		$data->execute();
-		return $data->affected_rows == 1;
-	}
-	public function getAll($page)
-	{
-		$offset = ($page - 1) * 10;
-		$res = $this->db->query("select * from khachhang order by point desc limit $offset, 10");
-		$data = [];
-		while ($row = $res->fetch_assoc()) {
-			$data[] = $row;
-		}
-		return json_encode($data);
-	}
 	public function getAllNhanVienGiaoHang($macuahang)
 	{
-		$res = $this->db->prepare("select * from nhanvien where macuahang = ? and chucVu = 'Nhân viên giao hàng'");
+		$res = $this->db->prepare("select * from nhanvien where macuahang = ? and chucVu = 'Nhân viên giao hàng' and deleted=0");
 		$res->bind_param('i', $macuahang);
 		$res->execute();
 		$result = $res->get_result();
@@ -81,7 +64,7 @@ class NhanVienModel extends BaseModel
 	}
 	public function getAllNhanVienBanHang($macuahang)
 	{
-		$res = $this->db->prepare("select * from nhanvien where macuahang = ? and chucVu = 'Nhân viên bán hàng'");
+		$res = $this->db->prepare("select * from nhanvien where macuahang = ? and chucVu = 'Nhân viên bán hàng' and deleted=0");
 		$res->bind_param('i', $macuahang);
 		$res->execute();
 		$result = $res->get_result();
@@ -93,7 +76,7 @@ class NhanVienModel extends BaseModel
 	}
 	public function getAllDauBep($macuahang)
 	{
-		$res = $this->db->prepare("select * from nhanvien where macuahang = ? and chucVu = 'Đầu bếp'");
+		$res = $this->db->prepare("select * from nhanvien where macuahang = ? and chucVu = 'Đầu bếp' and deleted=0");
 		$res->bind_param('i', $macuahang);
 		$res->execute();
 		$result = $res->get_result();
@@ -102,5 +85,26 @@ class NhanVienModel extends BaseModel
 			$data[] = $row;
 		}
 		return json_encode($data);
+	}
+	public function insert($tennv, $gioitinh, $ngaysinh, $sdt, $diachi, $chucVu, $maCuaHang, $matkhau)
+	{
+		$res = $this->db->prepare("insert into NhanVien (tenNhanVien, gioiTinh, ngaySinh, sdt, diaChi, chucVu, maCuaHang, matkhau) values(?,?,?,?,?,?,?,?)");
+		$res->bind_param('sissssis', $tennv, $gioitinh, $ngaysinh, $sdt, $diachi, $chucVu, $maCuaHang, $matkhau);
+		$res->execute();
+		return $res->affected_rows == 1;
+	}
+	public function update($tennv, $gioitinh, $ngaysinh, $diachi, $chucVu, $matkhau, $manv)
+	{
+		$res = $this->db->prepare("UPDATE NhanVien SET tenNhanVien=?, gioiTinh=?, ngaySinh=?, diaChi=?, chucVu=?, matkhau=? WHERE maNhanVien=?");
+		$res->bind_param('sissssi', $tennv, $gioitinh, $ngaysinh, $diachi, $chucVu, $matkhau, $manv);
+		$res->execute();
+		return $res->affected_rows == 1;
+	}
+	public function delete($manv)
+	{
+		$res = $this->db->prepare("UPDATE NhanVien SET deleted=1 WHERE maNhanVien=?");
+		$res->bind_param('i', $manv);
+		$res->execute();
+		return $res->affected_rows == 1;
 	}
 }

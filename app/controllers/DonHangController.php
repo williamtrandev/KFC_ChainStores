@@ -15,7 +15,8 @@ class DonHangController extends BaseController
 	{
 		echo $this->model_dh->getAllDonHangOnlineShip($maCuaHang);
 	}
-	public function getAllDonHangCanLam($maCuaHang) {
+	public function getAllDonHangCanLam($maCuaHang)
+	{
 		echo $this->model_dh->getAllDonHangCanLam($maCuaHang);
 	}
 	public function insert($sdtKhachHang, $tongTien, $maNhanVien, $maCuaHang)
@@ -33,5 +34,20 @@ class DonHangController extends BaseController
 	public function updateTrangThaiDonHang($maDonHang, $trangThai)
 	{
 		echo $this->model_dh->updateTrangThaiDonHang($maDonHang, $trangThai);
+	}
+	public function getAllDonHangDaBan($maCuaHang, $page)
+	{
+		echo $this->model_dh->getAllDonHangDaBan($maCuaHang, $page);
+	}
+	public function getNumberDonHangDaBan($maCuaHang) {
+		echo $this->model_dh->getNumberDonHangDaBan($maCuaHang);
+	}
+	public function getAllDonHangOnlineDaBan($maCuaHang, $page)
+	{
+		echo $this->model_dh->getAllDonHangOnlineDaBan($maCuaHang, $page);
+	}
+	public function getNumberDonHangOnlineDaBan($maCuaHang)
+	{
+		echo $this->model_dh->getNumberDonHangOnlineDaBan($maCuaHang);
 	}
 }

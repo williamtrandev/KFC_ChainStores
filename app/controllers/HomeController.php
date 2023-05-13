@@ -25,18 +25,27 @@ class HomeController extends BaseController
 	}
 	public function listOrder()
 	{
+		if (!isset($_SESSION['user'])) {
+			header("Location: " . _WEB_ROOT . "/nhanVien/login");
+		}
 		$this->data['title_page'] = 'Danh sách đơn hàng online';
 		$this->data['content'] = "order/order_list_online";
 		$this->render("layout/client_layout", $this->data);
 	}
 	public function listShip()
 	{
+		if (!isset($_SESSION['user'])) {
+			header("Location: " . _WEB_ROOT . "/nhanVien/login");
+		}
 		$this->data['title_page'] = 'Phân bổ đơn giao online';
 		$this->data['content'] = "order/order_list_ship";
 		$this->render("layout/client_layout", $this->data);
 	}
 	public function listToDo()
 	{
+		if (!isset($_SESSION['user'])) {
+			header("Location: " . _WEB_ROOT . "/nhanVien/login");
+		}
 		$this->data['title_page'] = 'Danh sách đơn cần làm';
 		$this->render("layout/client_layout", $this->data);
 	}
