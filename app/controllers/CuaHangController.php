@@ -18,8 +18,20 @@ class CuaHangController extends BaseController
 	{
 		echo $this->model_res->getAll();
 	}
-	public function insert($name, $address)
+	public function insert($tencuahang, $chinhanh)
 	{
-		echo $this->model_res->insert($name, $address);
+		echo $this->model_res->insert($tencuahang, $chinhanh);
+	}
+	public function update($tencuahang, $chinhanh, $macuahang)
+	{
+		echo $this->model_res->update($tencuahang, $chinhanh, $macuahang);
+	}
+	public function delete($macuahang)
+	{
+		echo $this->model_res->delete($macuahang);
+	}
+	public function getAllWithRevenue($macuahang)
+	{
+		echo $this->model_res->getAllWithRevenue($macuahang);
 	}
 }

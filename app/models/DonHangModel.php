@@ -4,7 +4,7 @@ class DonHangModel extends BaseModel
 	public function insert($sdtKhachHang, $tongTien, $maNhanVien, $maCuaHang)
 	{
 		$res = $this->db->prepare("insert into donhang (sdtKhachHang, tongTien, maNhanVien, maCuaHang) values(?,?,?,?)");
-		$res->bind_param("sdi", $sdtKhachHang, $tongTien, $maNhanVien, $maCuaHang);
+		$res->bind_param("sdii", $sdtKhachHang, $tongTien, $maNhanVien, $maCuaHang);
 		$res->execute();
 		return $res->affected_rows == 1;
 	}

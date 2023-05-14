@@ -11,4 +11,4 @@ Sale staff:
  - Choose "Phân bổ đơn hàng" to assign orders to delivery staff by clicking on a row and checking the last column of row to choose who will be the one to make the delivery.    
    
 Chef staff:   
- - Select a row and click "Hoàn thành đơn hàng" to complete the order.  
+ - Select a row then click "Hoàn thành đơn hàng" to complete the order.  

@@ -9,6 +9,14 @@ class NhanVienModel extends BaseModel
 		$info = $data->get_result()->fetch_assoc();
 		return json_encode($info);
 	}
+	public function getDetailQuanLyByMaCuaHang($macuahang)
+	{
+		$data = $this->db->prepare("select * from nhanvien where chucVu='Quản lý' and maCuaHang = ?");
+		$data->bind_param("i", $macuahang);
+		$data->execute();
+		$info = $data->get_result()->fetch_assoc();
+		return json_encode($info);
+	}
 	public function getDetailByPhone($phone)
 	{
 		$data = $this->db->prepare("select * from nhanvien where sdt = ?");

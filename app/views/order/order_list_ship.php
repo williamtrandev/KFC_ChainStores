@@ -1,6 +1,6 @@
 <div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative; background-color: #fff">
-	<table class="table table-striped mb-0 table-order-list-online">
-		<thead style="background-color: #002d72;">
+	<table class="table table-hover mb-0 table-order-list-online">
+		<thead style="background-color: #8470FF;">
 			<tr>
 				<th scope="col">STT</th>
 				<th scope="col">Mã đơn</th>

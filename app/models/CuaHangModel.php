@@ -3,39 +3,45 @@ class CuaHangModel extends BaseModel
 {
 	public function getAll()
 	{
-		$res = $this->db->query("select * from cuahang");
+		$res = $this->db->query("select * from cuahang where deleted=0");
 		$data = [];
 		while ($row = $res->fetch_assoc()) {
 			$data[] = $row;
 		}
 		return json_encode($data);
 	}
-	
-	public function insert($name, $detail, $price, $image_path)
+
+	public function insert($tencuahang, $chinhanh)
 	{
-		$res = $this->db->prepare("insert into combo (name, detail, price, image_path) values(?,?,?,?)");
-		$res->bind_param("ssis", $name, $detail, $price, $image_path);
+		$res = $this->db->prepare("insert into cuahang (tenCuaHang, chiNhanh) values(?,?)");
+		$res->bind_param("ss", $tencuahang, $chinhanh);
 		$res->execute();
-		return $res->affected_rows;
+		return $res->affected_rows == 1;
 	}
-	public function update($name, $detail, $price, $image_path, $id_combo)
+	public function update($tencuahang, $chinhanh, $maCuaHang)
 	{
-		if ($image_path == '') {
-			$res = $this->db->prepare("update combo set name=?, detail=?, price=? where id_combo=?");
-			$res->bind_param('ssii', $name, $detail, $price, $id_combo);
-			$res->execute();
-		} else {
-			$res = $this->db->prepare("update combo set name=?, detail=?, price=?, image_path=? where id_combo=?");
-			$res->bind_param('ssisi', $name, $detail, $price, $image_path, $id_combo);
-			$res->execute();
+		$res = $this->db->prepare("update cuahang set tenCuaHang=?, chiNhanh=? where maCuaHang=?");
+		$res->bind_param('ssi', $tencuahang, $chinhanh, $maCuaHang);
+		$res->execute();
+		return $res->affected_rows == 1;
+	}
+	public function delete($maCuaHang)
+	{
+		$res = $this->db->prepare("update cuahang set deleted=1 where maCuaHang=?");
+		$res->bind_param('i', $maCuaHang);
+		$res->execute();
+		return $res->affected_rows == 1;
+	}
+	public function getAllWithRevenue($maCuaHang)
+	{
+		$res = $this->db->prepare("select ch.*, sum(dh.tongTien) as tongTienCuaHang from cuahang ch join donhang dh on ch.maCuaHang = dh.maCuaHang where dh.maCuaHang=?");
+		$res->bind_param('i', $maCuaHang);
+		$res->execute();
+		$result = $res->get_result();
+		$data = [];
+		while ($row = $result->fetch_assoc()) {
+			$data[] = $row;
 		}
-		return $res->affected_rows;
-	}
-	public function delete($id_combo)
-	{
-		$res = $this->db->prepare("update combo set deleted=1 where id_combo=?");
-		$res->bind_param('i', $id_combo);
-		$res->execute();
-		return $res->affected_rows;
+		return json_encode($data);
 	}
 }
