@@ -18,11 +18,13 @@
         android:textSize="24sp" />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_sdt"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Số điện thoại"
         app:errorEnabled="true"
+        app:errorIconDrawable="@drawable/ic_baseline_error"
         app:startIconDrawable="@drawable/ic_baseline_smartphone">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -33,13 +35,15 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_pass"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:errorEnabled="true"
+        android:hint="Mật khẩu"
         app:endIconMode="password_toggle"
-        app:startIconDrawable="@drawable/ic_baseline_lock"
-        android:hint="Mật khẩu">
+        app:errorEnabled="true"
+        app:errorIconDrawable="@drawable/ic_baseline_error"
+        app:startIconDrawable="@drawable/ic_baseline_lock">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtxt_pass"

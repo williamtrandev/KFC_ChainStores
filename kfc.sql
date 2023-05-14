@@ -20,6 +20,7 @@ SET time_zone = "+00:00";
 --
 -- Cơ sở dữ liệu: `kfc`
 --
+DROP DATABASE IF EXISTS kfc;
 create database kfc;
 use kfc;
 -- --------------------------------------------------------
