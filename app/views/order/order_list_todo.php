@@ -1,6 +1,6 @@
 <div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative; background-color: #fff">
-	<table class="table table-striped mb-0 table-order-list-online">
-		<thead style="background-color: #002d72;">
+	<table class="table table-hover mb-0 table-order-list-online">
+		<thead style="background-color: #8470FF;">
 			<tr>
 				<th scope="col">STT</th>
 				<th scope="col">Mã đơn</th>
@@ -99,19 +99,19 @@
 
 		})
 		$(".btn-hoanthanhdonhang").click(() => {
-				let trangthai = "Sẵn sàng giao";
-				fetch(`<?php echo _WEB_ROOT ?>/donHang/updateTrangThaiDonHang/${maDonHangClick}/${trangthai}`)
-					.then(res => res.text())
-					.then(data => {
-						if (data == 1) {
-							alert("Đã hoàn thành đơn hàng");
-							fetchGetAllDonHangOnline();
-							$("#modalOrderList").modal("hide");
-						} else {
-							alert("Đã có gì đó xảy ra");
-						}
-					})
-					.catch(err => alert(err))
-			})
+			let trangthai = "Sẵn sàng giao";
+			fetch(`<?php echo _WEB_ROOT ?>/donHang/updateTrangThaiDonHang/${maDonHangClick}/${trangthai}`)
+				.then(res => res.text())
+				.then(data => {
+					if (data == 1) {
+						alert("Đã hoàn thành đơn hàng");
+						fetchGetAllDonHangOnline();
+						$("#modalOrderList").modal("hide");
+					} else {
+						alert("Đã có gì đó xảy ra");
+					}
+				})
+				.catch(err => alert(err))
+		})
 	})
 </script>

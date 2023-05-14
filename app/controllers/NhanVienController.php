@@ -60,4 +60,8 @@ class NhanVienController extends BaseController
 	{
 		echo $this->model_user->delete($manv);
 	}
+	public function getDetailQuanLyByMaCuaHang($macuahang)
+	{
+		echo $this->model_user->getDetailQuanLyByMaCuaHang($macuahang);
+	}
 }

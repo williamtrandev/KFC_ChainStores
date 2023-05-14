@@ -33,26 +33,15 @@
 					</div>
 				</div>
 
-				<a href="<?php echo _WEB_ROOT ?>/quanLy/index">
+				<a href="<?php echo _WEB_ROOT ?>/quanLyTong/index">
+					<span class="material-icons-sharp">store</span>
+					<h3>Quản lý chuỗi cửa hàng</h3>
+				</a>
+				<a href="<?php echo _WEB_ROOT ?>/quanLyTong/statistic">
 					<span class="material-icons-sharp">query_stats</span>
 					<h3>Xem thống kê lợi nhuận</h3>
 				</a>
-				<a href="<?php echo _WEB_ROOT ?>/quanLy/storehouse">
-					<span class="material-icons-sharp">store</span>
-					<h3>Quản lý kho</h3>
-				</a>
-				<a href="<?php echo _WEB_ROOT ?>/quanLy/foodList">
-					<span class="material-icons-sharp">fastfood</span>
-					<h3>Quản lý món ăn</h3>
-				</a>
-				<a href="<?php echo _WEB_ROOT ?>/quanLy/staffList">
-					<span class="material-icons-sharp">people</span>
-					<h3>Quản lý nhân viên</h3>
-				</a>
-				<a href="<?php echo _WEB_ROOT ?>/quanLy/historyList">
-					<span class="material-icons-sharp">history</span>
-					<h3>Lịch sử giao dịch</h3>
-				</a>
+
 				<a href="<?php echo _WEB_ROOT ?>/nhanVien/logout">
 					<span class="material-icons-sharp">logout</span>
 					<h3>Đăng xuất</h3>
@@ -77,20 +66,11 @@
 			</div>
 
 			<?php
-			if (!isset($info))
-				$info = '';
-			if (isset($qlk)) {
-				$this->render($content, ['info' => $info, 'hh' => $hh, 'ncc'=>$ncc]);
-			} else if (isset($tkln)) {
-				$this->render($content, ['data' => $data_pass, 'info' => $info, 'ndh' => $ndh, 'tongdt' => $tongdt]);
-			} else if (isset($qlma)) {
-				$this->render($content, ['data' => $data_pass, 'info' => $info, 'monmoi' => $monmoi, 'cb1' => $cb1, 'cbn' => $cbn, 'gr_gq' => $gr_gq, 'bg' => $bg, 'tan' => $tan, 'tu' => $tu]);
-			} else if (isset($dh)) {
-				$this->render($content, ['data' => $data_pass, 'info' => $info, 'dh' => $dh, 'dho' => $dho, 'ndh' => $ndh, 'ndho' => $ndho]);
-			} else if (isset($nvbh)) {
-				$this->render($content, ['data' => $data_pass, 'info' => $info, 'nvbh' => $nvbh, 'nvgh' => $nvgh, 'db' => $db]);
+
+			if (isset($qlch)) {
+				$this->render($content, ['ch' => $ch]);
 			} else {
-				$this->render($content, ['data' => $data_pass, 'info' => $info]);
+				$this->render($content, ['ch' => $ch]);
 			}
 			?>
 
