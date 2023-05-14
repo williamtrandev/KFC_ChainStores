@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 14, 2023 lúc 05:30 PM
+-- Thời gian đã tạo: Th5 14, 2023 lúc 05:35 PM
 -- Phiên bản máy phục vụ: 10.4.24-MariaDB
 -- Phiên bản PHP: 8.1.6
 
@@ -212,6 +212,14 @@ CREATE TABLE `khachhang` (
   `diem` double NOT NULL,
   `matkhau` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `khachhang`
+--
+
+INSERT INTO `khachhang` (`sdt`, `tenKhachHang`, `email`, `diaChi`, `diem`, `matkhau`) VALUES
+('0808080808', 'Nguyễn Luân', 'nguyenluan@gmail.com', 'Quận 7, TP.Hồ Chí Minh', 0, 'syluan123'),
+('0909090909', 'Luanado Vinci', 'luanado@gmail.com', 'Kí túc xá trường Tôn Đức Thắng', 0, 'syluan123');
 
 -- --------------------------------------------------------
 

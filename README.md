@@ -4,6 +4,7 @@ I'm in charge of web deployment for sales and usage managers. Meanwhile, Luan de
 Sale staff account: 0907640699, thanhtran123   
 Chef account: 0907640691, thanhtran123  
 Admin account: 0907640698, admin123
+Customer account: 0909090909, syluan123. 0808080808, syluan123
 
 Sale staff:   
  - Choose foods by clicking on the image of them, then click on the cart on the top right corner to proceed with the payment.    
