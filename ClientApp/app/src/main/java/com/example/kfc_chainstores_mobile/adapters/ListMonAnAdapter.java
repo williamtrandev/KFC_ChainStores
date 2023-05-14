@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kfc_chainstores_mobile.R;
@@ -27,10 +28,12 @@ public class ListMonAnAdapter extends RecyclerView.Adapter<ListMonAnAdapter.MonA
 
     private Context context;
     private List<MonAn> monAnList;
+    private MonAnClickListener monAnClickListener;
 
-    public ListMonAnAdapter(Context context, List<MonAn> monAnList) {
+    public ListMonAnAdapter(Context context, List<MonAn> monAnList, MonAnClickListener monAnClickListener) {
         this.context = context;
         this.monAnList = monAnList;
+        this.monAnClickListener = monAnClickListener;
     }
 
     @NonNull
@@ -59,6 +62,13 @@ public class ListMonAnAdapter extends RecyclerView.Adapter<ListMonAnAdapter.MonA
         holder.tv_gia.setText(formattedNumber);
 
         holder.tv_mota.setText(monAn.getMota());
+
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                monAnClickListener.onMonAnClick(monAn);
+            }
+        });
     }
 
     @Override
@@ -72,14 +82,20 @@ public class ListMonAnAdapter extends RecyclerView.Adapter<ListMonAnAdapter.MonA
     }
 
     public static class MonAnViewHolder extends RecyclerView.ViewHolder {
+        CardView cardView;
         ImageView imageView;
         TextView tv_tenMonAn, tv_gia, tv_mota;
         public MonAnViewHolder(@NonNull View itemView) {
             super(itemView);
+            cardView = itemView.findViewById(R.id.cv_monAn);
             imageView = itemView.findViewById(R.id.imageView);
             tv_tenMonAn = itemView.findViewById(R.id.tv_tenMonAn);
             tv_gia = itemView.findViewById(R.id.tv_gia);
             tv_mota = itemView.findViewById(R.id.tv_mota);
         }
+    }
+
+    public interface MonAnClickListener {
+        void onMonAnClick(MonAn monAn);
     }
 }

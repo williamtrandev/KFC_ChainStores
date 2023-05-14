@@ -1,6 +1,9 @@
 package com.example.kfc_chainstores_mobile;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,15 +12,22 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.kfc_chainstores_mobile.adapters.ListMonAnAdapter;
 import com.example.kfc_chainstores_mobile.model.CuaHang;
 import com.example.kfc_chainstores_mobile.model.LoaiMon;
 import com.example.kfc_chainstores_mobile.model.MonAn;
 import com.google.android.material.tabs.TabLayout;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -25,6 +35,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -101,7 +112,12 @@ public class ListMonAnFragment extends Fragment {
         rcv_monAn = view.findViewById(R.id.rcv_monAn);
 
         monAnList = new ArrayList<>();
-        listMonAnAdapter = new ListMonAnAdapter(getActivity(), monAnList);
+        listMonAnAdapter = new ListMonAnAdapter(getActivity(), monAnList, new ListMonAnAdapter.MonAnClickListener() {
+            @Override
+            public void onMonAnClick(MonAn monAn) {
+                openDialog(monAn);
+            }
+        });
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         rcv_monAn.setLayoutManager(gridLayoutManager);
 
@@ -126,6 +142,78 @@ public class ListMonAnFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    public void openDialog(MonAn monAn) {
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.mon_an_selected_dialog);
+
+        Window window = dialog.getWindow();
+        if (window == null) {
+            return;
+        }
+
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = Gravity.BOTTOM;
+        window.setAttributes(windowAttributes);
+        dialog.setCancelable(true);
+
+        ImageView anh = dialog.findViewById(R.id.iv_monAn);
+        TextView tv_tenMonAn = dialog.findViewById(R.id.tv_tenMonAn_selected);
+        TextView tv_gia = dialog.findViewById(R.id.tv_gia_selected);
+        TextView tv_soluong = dialog.findViewById(R.id.tv_soluong);
+        Button close = dialog.findViewById(R.id.btn_closeDialog);
+        Button plus = dialog.findViewById(R.id.btn_plus);
+        Button minus = dialog.findViewById(R.id.btn_minus);
+        Button addCart = dialog.findViewById(R.id.btn_addCart);
+        Button buyNow = dialog.findViewById(R.id.btn_buyNow);
+
+        String imageUrl = "http://10.0.2.2/KFC_ChainStores/public/assets/client/img/"+monAn.getImage_path();
+        Picasso.get().load(imageUrl).into(anh);
+
+        tv_tenMonAn.setText(monAn.getTenMonAn());
+
+        double number = monAn.getGia();
+        DecimalFormat formatter = new DecimalFormat("#,### đ");
+        String formattedNumber = formatter.format(number);
+        tv_gia.setText(formattedNumber);
+
+        minus.setEnabled(false);
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int sl = Integer.parseInt(tv_soluong.getText().toString()) + 1;
+                tv_soluong.setText(String.valueOf(sl));
+                if (sl > 1) {
+                    minus.setEnabled(true);
+                }
+            }
+        });
+
+        minus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int sl = Integer.parseInt(tv_soluong.getText().toString()) - 1;
+                tv_soluong.setText(String.valueOf(sl));
+                if (sl == 1) {
+                    minus.setEnabled(false);
+                }
+            }
+        });
+
+        dialog.show();
     }
 
     public void getLoaiMonAn() {
