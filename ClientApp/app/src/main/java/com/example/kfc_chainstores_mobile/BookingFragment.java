@@ -1,5 +1,6 @@
 package com.example.kfc_chainstores_mobile;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -100,8 +101,10 @@ public class BookingFragment extends Fragment {
         lvCuaHang.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                ListMonAnFragment listMonAnFragment = new ListMonAnFragment();
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, listMonAnFragment).commit();
+//                ListMonAnFragment listMonAnFragment = new ListMonAnFragment();
+//                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, listMonAnFragment).commit();
+                Intent intent = new Intent(getActivity(), ListMonAnActivity.class);
+                startActivity(intent);
             }
         });
 

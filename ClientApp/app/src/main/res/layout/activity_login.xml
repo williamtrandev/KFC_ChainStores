@@ -52,6 +52,13 @@
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <CheckBox
+        android:id="@+id/cb_remember"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:text="Ghi nhớ" />
+
     <TextView
         android:id="@+id/tv_passForgot"
         android:layout_width="wrap_content"
@@ -66,6 +73,15 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            android:text="Đăng nhập thất bại.\nSố điện thoại hoặc mật khẩu không đúng."
+            android:textColor="#F44336" />
 
         <Button
             android:id="@+id/btn_login"

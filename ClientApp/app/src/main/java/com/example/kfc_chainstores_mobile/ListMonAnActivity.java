@@ -1,21 +1,19 @@
 package com.example.kfc_chainstores_mobile;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -23,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.kfc_chainstores_mobile.adapters.ListMonAnAdapter;
-import com.example.kfc_chainstores_mobile.model.CuaHang;
 import com.example.kfc_chainstores_mobile.model.LoaiMon;
 import com.example.kfc_chainstores_mobile.model.MonAn;
 import com.google.android.material.tabs.TabLayout;
@@ -38,7 +35,6 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -46,52 +42,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ListMonAnFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class ListMonAnFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public ListMonAnFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ListMonAnFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ListMonAnFragment newInstance(String param1, String param2) {
-        ListMonAnFragment fragment = new ListMonAnFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+public class ListMonAnActivity extends AppCompatActivity {
 
     TabLayout tabLayout;
     List<LoaiMon> loaiMonList;
@@ -101,24 +52,24 @@ public class ListMonAnFragment extends Fragment {
     List<MonAn> monAnList;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_list_mon_an, container, false);
-        tabLayout = view.findViewById(R.id.tab_loaiMonAn);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_list_mon_an);
+
+        tabLayout = findViewById(R.id.tab_loaiMon);
         loaiMonList = new ArrayList<>();
         getLoaiMonAn();
 
-        rcv_monAn = view.findViewById(R.id.rcv_monAn);
+        rcv_monAn = findViewById(R.id.rcv_mon);
 
         monAnList = new ArrayList<>();
-        listMonAnAdapter = new ListMonAnAdapter(getActivity(), monAnList, new ListMonAnAdapter.MonAnClickListener() {
+        listMonAnAdapter = new ListMonAnAdapter(this, monAnList, new ListMonAnAdapter.MonAnClickListener() {
             @Override
             public void onMonAnClick(MonAn monAn) {
                 openDialog(monAn);
             }
         });
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         rcv_monAn.setLayoutManager(gridLayoutManager);
 
         rcv_monAn.setAdapter(listMonAnAdapter);
@@ -141,11 +92,10 @@ public class ListMonAnFragment extends Fragment {
 
             }
         });
-        return view;
     }
 
     public void openDialog(MonAn monAn) {
-        final Dialog dialog = new Dialog(getActivity());
+        final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.mon_an_selected_dialog);
 
@@ -236,7 +186,7 @@ public class ListMonAnFragment extends Fragment {
                         int id_loaimon = json.getInt("id_loaimon");
                         String tenLoaiMon = json.getString("tenLoaiMon");
 
-                        requireActivity().runOnUiThread(new Runnable() {
+                        runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 loaiMonList.add(new LoaiMon(id_loaimon, tenLoaiMon));
@@ -290,7 +240,7 @@ public class ListMonAnFragment extends Fragment {
                         ));
                     }
 
-                    requireActivity().runOnUiThread(new Runnable() {
+                    runOnUiThread(new Runnable() {
                         @SuppressLint("NotifyDataSetChanged")
                         @Override
                         public void run() {
@@ -303,5 +253,11 @@ public class ListMonAnFragment extends Fragment {
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_bar, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 }

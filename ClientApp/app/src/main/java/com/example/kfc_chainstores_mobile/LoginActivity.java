@@ -3,6 +3,8 @@ package com.example.kfc_chainstores_mobile;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.Editable;
@@ -10,18 +12,13 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.kfc_chainstores_mobile.model.LoaiMon;
-import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -35,8 +32,11 @@ public class LoginActivity extends AppCompatActivity {
 
     TextInputLayout layout_sdt, layout_pass;
     TextInputEditText sdt, pass;
-    TextView passForgot, register;
+    TextView passForgot, register, error;
+    CheckBox remember;
     Button login;
+
+    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,9 +48,18 @@ public class LoginActivity extends AppCompatActivity {
         pass = findViewById(R.id.edtxt_pass);
         passForgot = findViewById(R.id.tv_passForgot);
         register = findViewById(R.id.tv_register);
+        error = findViewById(R.id.tv_error);
+        remember = findViewById(R.id.cb_remember);
         login = findViewById(R.id.btn_login);
 
+        sharedPreferences = getSharedPreferences("login_information", MODE_PRIVATE);
+
+        if (sharedPreferences.contains("remember") && sharedPreferences.getBoolean("remember", false)) {
+            goToMainActivity();
+        }
+
         passForgot.setPaintFlags(passForgot.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
+        error.setVisibility(View.INVISIBLE);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +87,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 layout_sdt.setError(null);
+                error.setVisibility(View.INVISIBLE);
             }
 
             @Override
@@ -95,6 +105,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 layout_pass.setError(null);
+                error.setVisibility(View.INVISIBLE);
             }
 
             @Override
@@ -117,14 +128,32 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call call, @NonNull final Response response)
                     throws IOException {
                 String responseData = response.body().string();
-                Boolean jsonRes = Boolean.valueOf(responseData);
+                boolean jsonRes = Boolean.parseBoolean(responseData);
                 if (jsonRes) {
-
+                    sharedPreferences = getSharedPreferences("login_information", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    if (remember.isChecked()) {
+                        editor.putBoolean("remember", true);
+                    }
+                    editor.putString("phoneNumber", sdt);
+                    editor.putString("password", pass);
+                    editor.apply();
+                    goToMainActivity();
                 }
                 else {
-                    
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            error.setVisibility(View.VISIBLE);
+                        }
+                    });
                 }
             }
         });
+    }
+
+    public void goToMainActivity() {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
     }
 }
