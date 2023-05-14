@@ -34,7 +34,7 @@ class CuaHangModel extends BaseModel
 	}
 	public function getAllWithRevenue($maCuaHang)
 	{
-		$res = $this->db->prepare("select ch.*, sum(dh.tongTien) as tongTienCuaHang from cuahang ch join donhang dh on ch.maCuaHang = dh.maCuaHang where dh.maCuaHang=?");
+		$res = $this->db->prepare("select ch.*, sum(dh.tongTien) as tongDoanhThu from cuahang ch join donhang dh on ch.maCuaHang = dh.maCuaHang where dh.maCuaHang=?");
 		$res->bind_param('i', $maCuaHang);
 		$res->execute();
 		$result = $res->get_result();

@@ -5,6 +5,8 @@
 			<th>STT</th>
 			<th>Tên cửa hàng</th>
 			<th>Chi nhánh</th>
+			<th>Tổng doanh thu</th>
+			<th>Tổng phí nhập hàng</th>
 			<th>Lợi nhuận</th>
 		</thead>
 		<tbody class="body-revenue body-ch">
@@ -20,9 +22,7 @@
 						<td data-id=$item->maCuaHang>$i</td>
 						<td>$item->tenCuaHang</td>
 						<td>$item->chiNhanh</td>
-						<td>
-							$item->tongTienCuaHang
-						</td>
+						<td>$item->tongDoanhThu</td>
 					</tr>";
 				$i++;
 			}
@@ -136,7 +136,6 @@
 					let tr = "";
 					data.forEach(element => {
 						let price = element.tongTien.toLocaleString('vi-VN') + "đ";
-
 						let ngayLap = element.ngayLap;
 						const parts = ngayLap.split(" ");
 						const datePart = parts[0];
@@ -160,5 +159,16 @@
 			currNumDh = $($(".pag-dh li").filter('.active').find('a')[0]).text();
 			fetchLichSuDonHang(currNum);
 		})
+
+		let bodycuahang = $(".body-ch tr").each(function() {
+			fetch(`<?php echo _WEB_ROOT ?>/phieuNhapHang/getTotal/<?php echo json_decode($_SESSION['user'])->maCuaHang ?>`)
+				.then(res => res.text())
+				.then(data => {
+					$(this).append(`<td>${data}</td>`)
+					let loinhuan = parseInt($($(this).find("td")[3]).text()) - parseInt(data);
+					$(this).append(`<td>${loinhuan}</td>`)
+				})
+		})
+
 	})
 </script>
