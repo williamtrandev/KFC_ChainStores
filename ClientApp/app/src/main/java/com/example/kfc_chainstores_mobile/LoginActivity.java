@@ -19,6 +19,9 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -127,26 +130,36 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call call, @NonNull final Response response)
                     throws IOException {
-                String responseData = response.body().string();
-                boolean jsonRes = Boolean.parseBoolean(responseData);
-                if (jsonRes) {
-                    sharedPreferences = getSharedPreferences("login_information", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    if (remember.isChecked()) {
-                        editor.putBoolean("remember", true);
-                    }
-                    editor.putString("phoneNumber", sdt);
-                    editor.putString("password", pass);
-                    editor.apply();
-                    goToMainActivity();
-                }
-                else {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            error.setVisibility(View.VISIBLE);
+                try {
+                    String responseData = response.body().string();
+                    JSONObject jsonRes = new JSONObject(responseData);
+                    boolean status = jsonRes.getBoolean("status");
+                    JSONObject data = jsonRes.getJSONObject("data");
+                    if (status) {
+                        sharedPreferences = getSharedPreferences("login_information", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        if (remember.isChecked()) {
+                            editor.putBoolean("remember", true);
                         }
-                    });
+                        editor.putString("phoneNumber", sdt);
+                        editor.putString("password", pass);
+                        editor.putString("name", data.getString("tenKhachHang"));
+                        editor.putString("email", data.getString("email"));
+                        editor.putString("address", data.getString("diaChi"));
+                        editor.putFloat("points", (float) data.getDouble("diem"));
+                        editor.apply();
+                        goToMainActivity();
+                    }
+                    else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                error.setVisibility(View.VISIBLE);
+                            }
+                        });
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
         });
