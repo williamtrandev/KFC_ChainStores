@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -38,8 +40,9 @@ public class LoginActivity extends AppCompatActivity {
     TextView passForgot, register, error;
     CheckBox remember;
     Button login;
-
+    RadioGroup groupChoose;
     SharedPreferences sharedPreferences;
+    boolean isKhachHangLastLogin = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,11 +57,10 @@ public class LoginActivity extends AppCompatActivity {
         error = findViewById(R.id.tv_error);
         remember = findViewById(R.id.cb_remember);
         login = findViewById(R.id.btn_login);
-
+        groupChoose = findViewById(R.id.rg_account);
         sharedPreferences = getSharedPreferences("login_information", MODE_PRIVATE);
-
         if (sharedPreferences.contains("remember") && sharedPreferences.getBoolean("remember", false)) {
-            goToMainActivity();
+            goToMainActivity(isKhachHangLastLogin);
         }
 
         passForgot.setPaintFlags(passForgot.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
@@ -120,53 +122,113 @@ public class LoginActivity extends AppCompatActivity {
 
     private void clientLogin(String sdt, String pass) {
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url("http://10.0.2.2/KFC_ChainStores/khachHang/authenticate/"+sdt+"/"+pass).build();
+        int checkedId = groupChoose.getCheckedRadioButtonId();
+        if (checkedId != -1)
+        {
 
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                Log.d("onFailure", e.getMessage());
-            }
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull final Response response)
-                    throws IOException {
-                try {
-                    String responseData = response.body().string();
-                    JSONObject jsonRes = new JSONObject(responseData);
-                    boolean status = jsonRes.getBoolean("status");
-                    JSONObject data = jsonRes.getJSONObject("data");
-                    if (status) {
-                        sharedPreferences = getSharedPreferences("login_information", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        if (remember.isChecked()) {
-                            editor.putBoolean("remember", true);
-                        }
-                        editor.putString("phoneNumber", sdt);
-                        editor.putString("password", pass);
-                        editor.putString("name", data.getString("tenKhachHang"));
-                        editor.putString("email", data.getString("email"));
-                        editor.putString("address", data.getString("diaChi"));
-                        editor.putFloat("points", (float) data.getDouble("diem"));
-                        editor.apply();
-                        goToMainActivity();
+            int radioButtonID = groupChoose.getCheckedRadioButtonId();
+            View radioButton = groupChoose.findViewById(radioButtonID);
+            int idx = groupChoose.indexOfChild(radioButton);
+            if(idx == 0) {
+                Request request = new Request.Builder().url("http://10.0.2.2:8080/KFC_ChainStores/khachHang/authenticate/"+sdt+"/"+pass).build();
+
+                client.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                        Log.d("onFailure", e.getMessage());
                     }
-                    else {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                error.setVisibility(View.VISIBLE);
+                    @Override
+                    public void onResponse(@NonNull Call call, @NonNull final Response response)
+                            throws IOException {
+                        try {
+                            String responseData = response.body().string();
+                            JSONObject jsonRes = new JSONObject(responseData);
+                            boolean status = jsonRes.getBoolean("status");
+                            JSONObject data = jsonRes.getJSONObject("data");
+                            if (status) {
+                                sharedPreferences = getSharedPreferences("login_information", MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                if (remember.isChecked()) {
+                                    editor.putBoolean("remember", true);
+                                }
+                                editor.putString("phoneNumber", sdt);
+                                editor.putString("password", pass);
+                                editor.putString("name", data.getString("tenKhachHang"));
+                                editor.putString("email", data.getString("email"));
+                                editor.putString("address", data.getString("diaChi"));
+                                editor.putFloat("points", (float) data.getDouble("diem"));
+                                editor.apply();
+                                goToMainActivity(true);
+                                isKhachHangLastLogin = true;
+
                             }
-                        });
+                            else {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        error.setVisibility(View.VISIBLE);
+                                    }
+                                });
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                });
+            } else {
+                Request request = new Request.Builder().url("http://10.0.2.2:8080/KFC_ChainStores/nhanVien/authenticateMobile/"+sdt+"/"+pass).build();
+
+                client.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                        Log.d("onFailure", e.getMessage());
+                    }
+                    @Override
+                    public void onResponse(@NonNull Call call, @NonNull final Response response)
+                            throws IOException {
+                        try {
+                            String responseData = response.body().string();
+                            JSONObject jsonRes = new JSONObject(responseData);
+                            boolean status = jsonRes.getBoolean("status");
+                            JSONObject data = jsonRes.getJSONObject("data");
+                            if (status) {
+                                sharedPreferences = getSharedPreferences("login_information", MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                if (remember.isChecked()) {
+                                    editor.putBoolean("remember", true);
+                                }
+                                editor.putInt("maNhanVien", data.getInt("maNhanVien"));
+                                editor.apply();
+                                goToMainActivity(false);
+                                isKhachHangLastLogin = false;
+
+                            }
+                            else {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        error.setVisibility(View.VISIBLE);
+                                    }
+                                });
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
-        });
+        }
+
+
     }
 
-    public void goToMainActivity() {
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(intent);
+    public void goToMainActivity(boolean isKhachhang) {
+        if(isKhachhang) {
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(LoginActivity.this, MainActivityNhanVien.class);
+            startActivity(intent);
+        }
     }
 }

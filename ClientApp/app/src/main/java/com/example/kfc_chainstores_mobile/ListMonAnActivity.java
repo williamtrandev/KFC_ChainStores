@@ -122,7 +122,7 @@ public class ListMonAnActivity extends AppCompatActivity {
         Button addCart = dialog.findViewById(R.id.btn_addCart);
         Button buyNow = dialog.findViewById(R.id.btn_buyNow);
 
-        String imageUrl = "http://10.0.2.2/KFC_ChainStores/public/assets/client/img/"+monAn.getImage_path();
+        String imageUrl = "http://10.0.2.2:8080/KFC_ChainStores/public/assets/client/img/"+monAn.getImage_path();
         Picasso.get().load(imageUrl).into(anh);
 
         tv_tenMonAn.setText(monAn.getTenMonAn());
@@ -168,7 +168,7 @@ public class ListMonAnActivity extends AppCompatActivity {
 
     public void getLoaiMonAn() {
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url("http://10.0.2.2/KFC_ChainStores/loaiMon/getAll").build();
+        Request request = new Request.Builder().url("http://10.0.2.2:8080/KFC_ChainStores/loaiMon/getAll").build();
 
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -206,7 +206,7 @@ public class ListMonAnActivity extends AppCompatActivity {
 
     public void getListMonAn(int id_loaiMonAn) {
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url("http://10.0.2.2/KFC_ChainStores/monAn/getMonAnById/"+id_loaiMonAn).build();
+        Request request = new Request.Builder().url("http://10.0.2.2:8080/KFC_ChainStores/monAn/getMonAnById/"+id_loaiMonAn).build();
 
         monAnList.clear();
 

@@ -51,7 +51,7 @@ public class ListMonAnAdapter extends RecyclerView.Adapter<ListMonAnAdapter.MonA
             return;
         }
 
-        String imageUrl = "http://10.0.2.2/KFC_ChainStores/public/assets/client/img/"+monAn.getImage_path();
+        String imageUrl = "http://10.0.2.2:8080/KFC_ChainStores/public/assets/client/img/"+monAn.getImage_path();
         Picasso.get().load(imageUrl).into(holder.imageView);
 
         holder.tv_tenMonAn.setText(monAn.getTenMonAn());
