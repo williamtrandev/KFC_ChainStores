@@ -41,7 +41,10 @@
 					<span class="material-icons-sharp">query_stats</span>
 					<h3>Xem thống kê lợi nhuận</h3>
 				</a>
-
+				<a href="<?php echo _WEB_ROOT ?>/quanLyTong/foodList">
+					<span class="material-icons-sharp">fastfood</span>
+					<h3>Quản lý món ăn</h3>
+				</a>
 				<a href="<?php echo _WEB_ROOT ?>/nhanVien/logout">
 					<span class="material-icons-sharp">logout</span>
 					<h3>Đăng xuất</h3>
@@ -66,10 +69,12 @@
 			</div>
 
 			<?php
-
+			
 			if (isset($qlch)) {
 				$this->render($content, ['ch' => $ch]);
-			} else {
+			} else if(isset($qlma)) {
+				$this->render($content, ['data' => $data_pass, 'monmoi' => $monmoi, 'cb1' => $cb1, 'cbn' => $cbn, 'gr_gq' => $gr_gq, 'bg' => $bg, 'tan' => $tan, 'tu' => $tu]);
+			}else {
 				$this->render($content, ['ch' => $ch]);
 			}
 			?>

@@ -144,7 +144,7 @@
 
 			<!-- Modal body -->
 			<div class="modal-body text-reset text-muted">
-				<form>
+				<form class="form-infoManager">
 					<div class="mb-3">
 						<label for="recipient-name" class="col-form-label">Tên quản lý cửa hàng:</label>
 						<input type="text" class="form-control tennv" required>
@@ -163,7 +163,7 @@
 					</div>
 					<div class="mb-3">
 						<label for="recipient-name" class="col-form-label">Số điện thoại:</label>
-						<input type="text" class="form-control sdt" required>
+						<input type="text" class="form-control sdt" required readonly>
 					</div>
 					<div class="mb-3">
 						<label for="" class="col-form-label">Địa chỉ:</label>
@@ -179,7 +179,8 @@
 
 			<!-- Modal footer -->
 			<div class="modal-footer">
-				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+				<button type="button" class="btn btn-info btn-addQL">Thêm</button>
+				<button type="button" class="btn btn-success btn-updateQL">Thay đổi</button>
 			</div>
 
 		</div>
@@ -259,19 +260,73 @@
 		$(".body-ch tr").click((e) => {
 			if (!$(e.target).hasClass("icon")) {
 				let mach = $(e.target).closest("tr").attr("data-id");
+				$(".form-infoManager")[0].reset();
+				$("#managerModal").attr("data-id", mach);
 				fetch(`<?php echo _WEB_ROOT ?>/nhanVien/getDetailQuanLyByMaCuaHang/${mach}`)
 					.then(res => res.json())
 					.then(data => {
 						if (data != null) {
+							let gioitinh = data.gioiTinh == 0 ? "00" : "1";
 							$(".tennv").val(data.tenNhanVien);
-							$(".gioitinh").val(data.gioiTinh);
+							$(".gioitinh").val(gioitinh);
 							$(".ngaysinhnv").val(data.ngaySinh);
 							$(".sdt").val(data.sdt);
 							$(".diachi").val(data.diaChi);
 							$(".matkhau").val(data.matkhau);
+							$("#managerModal").attr("data-maql", data.maNhanVien);
+						} else {
+							$("#managerModal").removeAttr("data-maql");
 						}
 						$("#managerModal").modal("show");
+
 					});
+			}
+		})
+		$(".btn-addQL").click(() => {
+			let tennv = $(".tennv").val();
+			let gioitinh = $(".gioitinh").val();
+			let ngaysinhnv = $(".ngaysinhnv").val();
+			let sdt = $(".sdt").val();
+			let diachi = $(".diachi").val();
+			let matkhau = $(".matkhau").val();
+			let mach = $("#managerModal").attr("data-id");
+			fetch(`<?php echo _WEB_ROOT ?>/nhanVien/insert/${tennv}/${gioitinh}/${ngaysinhnv}/${sdt}/${diachi}/Quản lý/${mach}/${matkhau}`)
+				.then(res => res.text())
+				.then(data => {
+					if (data == 1) {
+						alert("Thêm quản lý cửa hàng thành công");
+						$("#addModal").modal("hide");
+						location.reload();
+					} else {
+						alert("Đã có gì đó xảy ra");
+					}
+				})
+				.catch(err => alert(err))
+
+		})
+
+		$(".btn-updateQL").click(() => {
+			let tennv = $(".tennv").val();
+			let gioitinh = $(".gioitinh").val();
+			let ngaysinhnv = $(".ngaysinhnv").val();
+			let diachi = $(".diachi").val();
+			let matkhau = $(".matkhau").val();
+			let manv = $("#managerModal").attr("data-maql");
+			if (manv) {
+				fetch(`<?php echo _WEB_ROOT ?>/nhanVien/update/${tennv}/${gioitinh}/${ngaysinhnv}/${diachi}/Quản lý/${matkhau}/${manv}`)
+					.then(res => res.text())
+					.then(data => {
+						if (data == 1) {
+							alert("Thay đổi thông tin quản lý cửa hàng thành công");
+							$("#addModal").modal("hide");
+							location.reload();
+						} else {
+							alert("Đã có gì đó xảy ra");
+						}
+					})
+					.catch(err => alert(err))
+			} else {
+				alert("Cửa hàng chưa có quản lý để chỉnh sửa thông tin");
 			}
 		})
 	})

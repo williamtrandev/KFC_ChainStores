@@ -48,24 +48,7 @@ class QuanLyController extends BaseController
 		$this->data['ndho'] = $this->model("DonHangModel")->getNumberDonHangOnlineDaBan($maCuaHang);
 		$this->render("layout/admin_layout", $this->data);
 	}
-	public function foodList()
-	{
-		if (!isset($_SESSION['user'])) {
-			header("Location: " . _WEB_ROOT . "/nhanVien/login");
-		}
-		$this->data['title_page'] = 'Danh sách món ăn';
-		$this->data['content'] = 'admin/quanlymonan';
-		$this->data['data_pass'] = '';
-		$this->data['qlma'] = '';
-		$this->data['monmoi'] = json_decode($this->model("MonAnModel")->getMonAnById(1));
-		$this->data['cb1'] = json_decode($this->model("MonAnModel")->getMonAnById(2));
-		$this->data['cbn'] = json_decode($this->model("MonAnModel")->getMonAnById(3));
-		$this->data['gr_gq'] = json_decode($this->model("MonAnModel")->getMonAnById(4));
-		$this->data['bg'] = json_decode($this->model("MonAnModel")->getMonAnById(5));
-		$this->data['tan'] = json_decode($this->model("MonAnModel")->getMonAnById(6));
-		$this->data['tu'] = json_decode($this->model("MonAnModel")->getMonAnById(7));
-		$this->render("layout/admin_layout", $this->data);
-	}
+	
 	public function storehouse() {
 		if (!isset($_SESSION['user'])) {
 			header("Location: " . _WEB_ROOT . "/nhanVien/login");

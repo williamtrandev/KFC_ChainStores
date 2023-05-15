@@ -3,9 +3,15 @@ class KhachHangModel extends BaseModel
 {
 	public function authenticate($sdt, $matkhau)
 	{
-		$res = $this->db->prepare("select count(*) as ketqua from khachhang where sdt=? and matkhau=?");
+		$res = $this->db->prepare("select * from khachhang where sdt=? and matkhau=?");
 		$res->bind_param("ss", $sdt, $matkhau);
 		$res->execute();
-		return json_decode($res->get_result()->fetch_assoc()['ketqua'] == 1);
+		$result = $res->get_result();
+		$data = [];
+		while ($row = $result->fetch_assoc()) {
+			$data[] = $row;
+		}
+		$status = count($data) == 1;
+		return json_encode(array('status' => $status, 'data' => $data[0]));
 	}
 }

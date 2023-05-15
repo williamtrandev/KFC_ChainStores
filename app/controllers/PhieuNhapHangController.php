@@ -10,4 +10,8 @@ class PhieuNhapHangController extends BaseController
 	{
 		echo $this->model_pnh->getTotal($maCuaHang);
 	}
+	public function getAll($maCuaHang)
+	{
+		echo $this->model_pnh->getAll($maCuaHang);
+	}
 }

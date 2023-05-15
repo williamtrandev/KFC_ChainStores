@@ -47,9 +47,9 @@ class NhanVienController extends BaseController
 	{
 		echo $this->model_user->getAllNhanVienGiaoHang($macuahang);
 	}
-	public function insert($tennv, $gioitinh, $ngaysinh, $sdt, $diachi, $chucVu, $matkhau)
+	public function insert($tennv, $gioitinh, $ngaysinh, $sdt, $diachi, $chucVu, $maCuaHang, $matkhau)
 	{
-		$maCuaHang = json_decode($_SESSION['user'])->maCuaHang;
+
 		echo $this->model_user->insert($tennv, $gioitinh, $ngaysinh, $sdt, $diachi, $chucVu, $maCuaHang, $matkhau);
 	}
 	public function update($tennv, $gioitinh, $ngaysinh, $diachi, $chucVu, $matkhau, $manv)

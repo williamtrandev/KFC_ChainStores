@@ -41,6 +41,10 @@ class DonHangController extends BaseController
 	{
 		echo $this->model_dh->getAllDonHangDaBan($maCuaHang, $page);
 	}
+	public function getNumberDonHang($maCuaHang)
+	{
+		echo $this->model_dh->getNumberDonHang($maCuaHang);
+	}
 	public function getNumberDonHangDaBan($maCuaHang) {
 		echo $this->model_dh->getNumberDonHangDaBan($maCuaHang);
 	}

@@ -5,9 +5,6 @@
 			<th>STT</th>
 			<th>Tên cửa hàng</th>
 			<th>Chi nhánh</th>
-			<th>Tổng doanh thu</th>
-			<th>Tổng phí nhập hàng</th>
-			<th>Lợi nhuận</th>
 		</thead>
 		<tbody class="body-revenue body-ch">
 			<style>
@@ -22,7 +19,6 @@
 						<td data-id=$item->maCuaHang>$i</td>
 						<td>$item->tenCuaHang</td>
 						<td>$item->chiNhanh</td>
-						<td>$item->tongDoanhThu</td>
 					</tr>";
 				$i++;
 			}
@@ -85,7 +81,7 @@
 		</tbody>
 	</table>
 	<div class="w-100 d-flex justify-content-center mt-2">
-		<ul class="pagination d-flex pag-dho">
+		<ul class="pagination d-flex pag-dh">
 			<li class="page-item active"><a class="page-link" href="#">1</a></li>
 			<?php
 			// $totalItems = $ndh;
@@ -118,19 +114,13 @@
 
 <script>
 	$(function() {
-		let currNumDh = $($(".pag-dh li").filter('.active').find('a')[0]).text();
-		if (currNumDh == 1) {
-			$(".prev-btn-dh").parent().addClass("disabled");
-		} else {
-			$(".prev-btn-dh").parent().removeClass("disabled");
-		}
-		fetchLichSuDonHang(1);
+		let mach_click = null;
 
-		function fetchLichSuDonHang(page) {
+		function fetchLichSuDonHang(macuahang, page) {
 			let perpage = 10;
 			let i = (page - 1) * perpage + 1;
 			$(".body-dh").children().remove();
-			fetch(`<?php echo _WEB_ROOT ?>/donHang/getAllDonHang/<?php echo json_decode($_SESSION['user'])->maCuaHang ?>/${page}`)
+			fetch(`<?php echo _WEB_ROOT ?>/donHang/getAllDonHang/${macuahang}/${page}`)
 				.then(res => res.json())
 				.then(data => {
 					let tr = "";
@@ -155,20 +145,77 @@
 					$(".body-dh").append(tr);
 				})
 		}
-		$(".pag-dh li").click(() => {
-			currNumDh = $($(".pag-dh li").filter('.active').find('a')[0]).text();
-			fetchLichSuDonHang(currNum);
-		})
-
-		let bodycuahang = $(".body-ch tr").each(function() {
-			fetch(`<?php echo _WEB_ROOT ?>/phieuNhapHang/getTotal/<?php echo json_decode($_SESSION['user'])->maCuaHang ?>`)
+		$(".body-ch tr").click(function(e) {
+			let mach = $(e.target).closest("tr").attr("data-id");
+			mach_click = mach;
+			let cpnh = 0;
+			let tdt = 0;
+			fetch(`<?php echo _WEB_ROOT ?>/donHang/getTotalRevenue/${mach}`)
 				.then(res => res.text())
 				.then(data => {
-					$(this).append(`<td>${data}</td>`)
-					let loinhuan = parseInt($($(this).find("td")[3]).text()) - parseInt(data);
-					$(this).append(`<td>${loinhuan}</td>`)
+					$(".tongdoanhthu").text(parseInt(data).toLocaleString("vi-VN") + "đ");
+					tdt = parseInt(data);
+					fetch(`<?php echo _WEB_ROOT ?>/phieuNhapHang/getTotal/${mach}`)
+						.then(res => res.text())
+						.then(data => {
+							$(".chiphinhaphang").text(parseInt(data).toLocaleString("vi-VN") + "đ");
+							cpnh = parseInt(data);
+							$(".loinhuan").text(parseInt(tdt - cpnh).toLocaleString("vi-VN") + "đ");
+						})
+						.catch(err => console.log(err));
 				})
-		})
+				.catch(err => console.log(err));
+			fetch(`<?php echo _WEB_ROOT ?>/donHang/getNumberDonHang/${mach}`)
+				.then(res => res.text())
+				.then(data => {
+					var totalItems = data;
+					var perPage = 10;
+					var totalPages = Math.ceil(totalItems / perPage);
+					for (var i = 2; i <= totalPages; i++) {
+						var li = $("<li>").addClass("page-item");
+						var a = $("<a>").addClass("page-link").attr("href", "#").text(i);
+						li.append(a);
+						$(".pag-dh").append(li);
+					}
+				})
+			fetchLichSuDonHang(mach_click, 1);
+			$(".body-nh").children().remove();
+			fetch(`<?php echo _WEB_ROOT ?>/phieuNhapHang/getAll/${mach}`)
+				.then(res => res.json())
+				.then(data => {
+					let tr = "";
+					let i = 1;
+					data.forEach(element => {
+						let price = element.tongTien.toLocaleString('vi-VN') + "đ";
+						let ngayLap = element.ngayLap;
+						const parts = ngayLap.split(" ");
+						const datePart = parts[0];
+						const timePart = parts[1];
 
+						const dateParts = datePart.split("-");
+						const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+
+						ngayLap = `${formattedDate} ${timePart}`;
+						tr += `<tr>
+							<td data-id=${element.maPhieuNhap}>${i++}</td>
+							<td>${element.maPhieuNhap}</td>
+							<td>${ngayLap}</td>
+							<td>${price}</td>
+						</tr>`;
+					});
+					$(".body-nh").append(tr);
+				})
+				.catch(err => console.log(err));
+		})
+		let currNumDh = $($(".pag-dh li").filter('.active').find('a')[0]).text();
+		if (currNumDh == 1) {
+			$(".prev-btn-dh").parent().addClass("disabled");
+		} else {
+			$(".prev-btn-dh").parent().removeClass("disabled");
+		}
+		$(".pag-dh li").click(() => {
+			currNumDh = $($(".pag-dh li").filter('.active').find('a')[0]).text();
+			fetchLichSuDonHang(mach_click, currNum);
+		})
 	})
 </script>

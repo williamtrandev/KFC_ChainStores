@@ -277,7 +277,7 @@
 			let diachi = $(".diachi").val();
 			let chucvu = $(".chucvu").val();
 			let matkhau = $(".matkhau").val();
-			fetch(`<?php echo _WEB_ROOT ?>/nhanVien/insert/${tennv}/${gioitinh}/${ngaysinhnv}/${sdt}/${diachi}/${chucvu}/${matkhau}`)
+			fetch(`<?php echo _WEB_ROOT ?>/nhanVien/insert/${tennv}/${gioitinh}/${ngaysinhnv}/${sdt}/${diachi}/${chucvu}/<?php echo json_decode($_SESSION['user'])->maCuaHang; ?>/${matkhau}`)
 				.then(res => res.text())
 				.then(data => {
 					if (data == 1) {
