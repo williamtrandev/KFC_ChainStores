@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 14, 2023 lúc 05:35 PM
+-- Thời gian đã tạo: Th5 16, 2023 lúc 05:25 PM
 -- Phiên bản máy phục vụ: 10.4.24-MariaDB
 -- Phiên bản PHP: 8.1.6
 
@@ -93,6 +93,14 @@ CREATE TABLE `chitietphieunhaphang` (
   `soLuong` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Đang đổ dữ liệu cho bảng `chitietphieunhaphang`
+--
+
+INSERT INTO `chitietphieunhaphang` (`id`, `maPhieuNhap`, `maHang`, `soLuong`) VALUES
+(1, 1, 1, 1),
+(2, 3, 3, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -126,7 +134,7 @@ CREATE TABLE `donhang` (
   `ngayLap` datetime NOT NULL DEFAULT current_timestamp(),
   `tongTien` double NOT NULL,
   `trangThai` text NOT NULL DEFAULT 'Đang xử lý',
-  `maNhanVien` int(11) NOT NULL,
+  `maNhanVien` int(11) DEFAULT NULL,
   `maCuaHang` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -136,8 +144,8 @@ CREATE TABLE `donhang` (
 
 INSERT INTO `donhang` (`maDonHang`, `sdtKhachHang`, `ngayLap`, `tongTien`, `trangThai`, `maNhanVien`, `maCuaHang`) VALUES
 (28, '0907640612', '2023-05-11 15:59:45', 123000, 'Hoàn thành', 2, 1),
-(29, '0987654321', '2023-05-11 16:54:11', 210000, 'Hoàn thành', 2, 1),
-(30, '0123456789', '2023-05-11 18:09:48', 123000, 'Hoàn thành', 2, 1),
+(29, '0987654321', '2023-05-11 16:54:11', 210000, 'Sẵn sàng giao', 2, 1),
+(30, '0123456789', '2023-05-11 18:09:48', 123000, 'Sẵn sàng giao', 2, 1),
 (31, '0123456789', '2023-05-11 18:12:48', 132000, 'Đang xử lý', 2, 0),
 (32, '0123456789', '2023-05-14 01:14:06', 375000, 'Đang xử lý', 2, 1),
 (33, '0123456789', '2023-05-14 01:14:18', 297000, 'Đang xử lý', 2, 1),
@@ -161,7 +169,8 @@ CREATE TABLE `donhangonline` (
 --
 
 INSERT INTO `donhangonline` (`id_donhangonline`, `maDonHang`, `maNhanVienGiao`, `diaChiGiaoHang`) VALUES
-(2, 29, 3, '166 Dương Bá Trạc, Quận 8.');
+(2, 29, 3, '166 Dương Bá Trạc, Quận 8.'),
+(4, 30, 3, 'Sa Đéc, Đồng Tháp');
 
 -- --------------------------------------------------------
 
@@ -186,17 +195,18 @@ CREATE TABLE `hanghoa` (
   `maHang` int(11) NOT NULL,
   `tenHang` text NOT NULL,
   `donViTinh` text NOT NULL,
-  `giaNhap` double NOT NULL
+  `giaNhap` double NOT NULL,
+  `maNhaCungCap` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Đang đổ dữ liệu cho bảng `hanghoa`
 --
 
-INSERT INTO `hanghoa` (`maHang`, `tenHang`, `donViTinh`, `giaNhap`) VALUES
-(1, 'Thịt gà', 'Kilogram', 180000),
-(2, 'Bánh mì', 'Cái', 8000),
-(3, 'Khoai tây', 'Kilogram', 30000);
+INSERT INTO `hanghoa` (`maHang`, `tenHang`, `donViTinh`, `giaNhap`, `maNhaCungCap`) VALUES
+(1, 'Thịt gà', 'Kilogram', 180000, 1),
+(2, 'Bánh mì', 'Cái', 8000, 2),
+(3, 'Khoai tây', 'Kilogram', 30000, 3);
 
 -- --------------------------------------------------------
 
@@ -232,9 +242,16 @@ CREATE TABLE `kho` (
   `maHang` int(11) NOT NULL,
   `maPhieuNhap` int(11) NOT NULL,
   `soLuong` int(11) NOT NULL,
-  `hsd` datetime NOT NULL,
   `maCuaHang` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Đang đổ dữ liệu cho bảng `kho`
+--
+
+INSERT INTO `kho` (`id`, `maHang`, `maPhieuNhap`, `soLuong`, `maCuaHang`) VALUES
+(1, 1, 1, 1, 1),
+(2, 3, 3, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -354,7 +371,8 @@ CREATE TABLE `nhacungcap` (
 
 INSERT INTO `nhacungcap` (`maNhaCungCap`, `tenNhaCungCap`, `sdt`, `diaChi`, `maCuaHang`, `deleted`) VALUES
 (1, 'Công ty gà William Tran', '0983712315', 'Nguyễn Sinh Sắc, Sa Đéc, Đồng Tháp', 1, 0),
-(2, 'Công ty Hamburger William Tran', '0291372183', 'Bình Thạnh, TP.Hồ Chí Minh', 1, 0);
+(2, 'Công ty Hamburger William Tran', '0291372183', 'Bình Thạnh, TP.Hồ Chí Minh', 1, 0),
+(3, 'Công ty nông sản Luanado', '0928136712', 'Quận 6, TP.Hồ Chí Minh', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -385,13 +403,14 @@ INSERT INTO `nhanvien` (`maNhanVien`, `tenNhanVien`, `gioiTinh`, `ngaySinh`, `sd
 (3, 'Thành Thứ Hai', 1, '2003-11-30', '0907640697', 'Lai Vung, Đồng Tháp', 'Nhân viên giao hàng', 1, 'thanhtran123', 0),
 (4, 'Thành Thứ Ba', 1, '2003-11-30', '0907640696', 'Quận 7, TP.Hồ Chí Minh', 'Nhân viên giao hàng', 1, 'thanhtran123', 0),
 (5, 'Thành Chủ Nhật', 1, '2003-11-30', '0907640691', 'Quận 6, TP.Hồ Chí Minh', 'Đầu bếp', 1, 'thanhtran123', 0),
-(6, 'Thành Thứ Bảy', 1, '2003-11-30', '0907640692', 'Mỹ Tho, Tiền giang', 'Quản lý', 1, 'admin123', 0),
+(6, 'Thành Thứ Bảy', 1, '2003-11-30', '0907640692', 'Mỹ Tho, Tiền Giang', 'Quản lý', 1, 'admin123', 0),
 (7, 'Thành Thứ Nhất', 1, '2003-11-30', '092137821', 'Quán cafe Ông Bầu', 'Nhân viên bán hàng', 1, 'abc123', 0),
 (8, 'Thành Thứ Nữ', 0, '2000-10-20', '09123881371', 'Lấp Vò, Đồng Tháp', 'Nhân viên bán hàng', 1, 'abcd123', 0),
 (12, 'a', 1, '0000-00-00', '0111111111', 'a', 'a', 1, 'a', 0),
 (13, 'Thành Thứ Gì', 1, '2003-11-20', '0987111111', 'Quận 5, TP.Hồ Chí Minh', 'Đầu bếp', 1, 'abc123', 0),
 (14, 'ab', 0, '2023-12-12', '02139013892', 'a', 'Nhân viên bán hàng', 1, 'a', 0),
-(15, 'a', 0, '2023-05-20', 'a', 'a', 'Nhân viên bán hàng', 1, 'a', 1);
+(15, 'a', 0, '2023-05-20', 'a', 'a', 'Nhân viên bán hàng', 1, 'a', 1),
+(19, 'William Tran 2k3', 0, '2003-11-11', '0921378131', 'Cái Bè, Tiền Giang', 'Quản lý', 2, 'admin123', 0);
 
 -- --------------------------------------------------------
 
@@ -402,7 +421,7 @@ INSERT INTO `nhanvien` (`maNhanVien`, `tenNhanVien`, `gioiTinh`, `ngaySinh`, `sd
 CREATE TABLE `phieunhaphang` (
   `maPhieuNhap` int(11) NOT NULL,
   `maNhaCungCap` int(11) NOT NULL,
-  `ngayLap` datetime NOT NULL,
+  `ngayLap` datetime NOT NULL DEFAULT current_timestamp(),
   `tongTien` double NOT NULL,
   `maCuaHang` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -412,7 +431,8 @@ CREATE TABLE `phieunhaphang` (
 --
 
 INSERT INTO `phieunhaphang` (`maPhieuNhap`, `maNhaCungCap`, `ngayLap`, `tongTien`, `maCuaHang`) VALUES
-(1, 1, '2023-05-14 12:31:57', 50000, 1);
+(1, 1, '2023-05-14 12:31:57', 50000, 1),
+(3, 3, '2023-05-16 22:22:56', 30000, 1);
 
 -- --------------------------------------------------------
 
@@ -432,7 +452,8 @@ CREATE TABLE `thanhtoan` (
 --
 
 INSERT INTO `thanhtoan` (`maThanhToan`, `maDonHang`, `phuongThucThanhToan`, `trangThaiThanhToan`) VALUES
-(1, 29, 'Thanh toán Online', 1);
+(1, 29, 'Thanh toán Online', 0),
+(2, 30, 'Thanh toán bằng tiền mặt', 0);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -560,7 +581,7 @@ ALTER TABLE `chitietdonhang`
 -- AUTO_INCREMENT cho bảng `chitietphieunhaphang`
 --
 ALTER TABLE `chitietphieunhaphang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT cho bảng `cuahang`
@@ -578,7 +599,7 @@ ALTER TABLE `donhang`
 -- AUTO_INCREMENT cho bảng `donhangonline`
 --
 ALTER TABLE `donhangonline`
-  MODIFY `id_donhangonline` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_donhangonline` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT cho bảng `giohang`
@@ -596,7 +617,7 @@ ALTER TABLE `hanghoa`
 -- AUTO_INCREMENT cho bảng `kho`
 --
 ALTER TABLE `kho`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT cho bảng `loaimon`
@@ -620,25 +641,25 @@ ALTER TABLE `nguyenlieu`
 -- AUTO_INCREMENT cho bảng `nhacungcap`
 --
 ALTER TABLE `nhacungcap`
-  MODIFY `maNhaCungCap` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `maNhaCungCap` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT cho bảng `nhanvien`
 --
 ALTER TABLE `nhanvien`
-  MODIFY `maNhanVien` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `maNhanVien` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT cho bảng `phieunhaphang`
 --
 ALTER TABLE `phieunhaphang`
-  MODIFY `maPhieuNhap` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `maPhieuNhap` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT cho bảng `thanhtoan`
 --
 ALTER TABLE `thanhtoan`
-  MODIFY `maThanhToan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `maThanhToan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
