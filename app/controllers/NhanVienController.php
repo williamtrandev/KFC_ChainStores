@@ -35,6 +35,9 @@ class NhanVienController extends BaseController
 			}
 		}
 	}
+	public function authenticateMobile($sdt, $matkhau) {
+		echo $this->model_user->authenticateMobile($sdt, $matkhau);
+	}
 	public function logout()
 	{
 		// Xóa session

@@ -25,6 +25,18 @@ class NhanVienModel extends BaseModel
 		$info = $data->get_result()->fetch_assoc();
 		return json_encode($info);
 	}
+	public function authenticateMobile($sdt, $matkhau)  {
+		$res = $this->db->prepare("select * from nhanvien where sdt=? and matkhau=?");
+		$res->bind_param("ss", $sdt, $matkhau);
+		$res->execute();
+		$result = $res->get_result();
+		$data = [];
+		while ($row = $result->fetch_assoc()) {
+			$data[] = $row;
+		}
+		$status = count($data) == 1;
+		return json_encode(array('status' => $status, 'data' => $data[0]));
+	}
 	public function login($username, $password)
 	{
 		$roleStaff = "nv";

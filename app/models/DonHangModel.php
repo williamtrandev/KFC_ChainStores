@@ -66,6 +66,18 @@ class DonHangModel extends BaseModel
 		}
 		return json_encode($data);
 	}
+	public function getAllDonHangTheoNVGiao($maNhanVien)
+	{
+		$res = $this->db->prepare("select dh.*, dho.diaChiGiaoHang, tt.phuongThucThanhToan, tt.trangThaiThanhToan from donhang dh join donhangonline dho on dh.maDonHang = dho.maDonHang join thanhtoan tt on dh.maDonHang = tt.maDonHang join nhanvien nv on nv.maNhanVien = dho.maNhanVienGiao  where trangthai = 'Sẵn sàng giao' and dho.maNhanVienGiao=?");
+		$res->bind_param("i", $maNhanVien);
+		$res->execute();
+		$result = $res->get_result();
+		$data = [];
+		while ($row = $result->fetch_assoc()) {
+			$data[] = $row;
+		}
+		return json_encode($data);
+	}
 	public function getAllDonHangDaBan($maCuaHang, $page)
 	{
 		$perpage = 10;
@@ -131,6 +143,13 @@ class DonHangModel extends BaseModel
 		$res->bind_param("si", $trangThai, $maDonHang);
 		$res->execute();
 		return $res->affected_rows == 1;
+	}
+	public function updateTrangThaiDonHangMobile($maDonHang, $trangThai)
+	{
+		$res = $this->db->prepare("update donhang set trangThai = ? where maDonHang = ?");
+		$res->bind_param("si", $trangThai, $maDonHang);
+		$res->execute();
+		return json_encode(array('status' => $res->affected_rows == 1));
 	}
 	public function getTotalRevenue($maCuaHang)
 	{

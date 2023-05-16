@@ -14,4 +14,11 @@ class PhieuNhapHangController extends BaseController
 	{
 		echo $this->model_pnh->getAll($maCuaHang);
 	}
+	public function getMaMoiNhat($maCuaHang)
+	{
+		echo $this->model_pnh->getMaMoiNhat($maCuaHang);
+	}
+	public function insert() {
+		
+	}
 }
