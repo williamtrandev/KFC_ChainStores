@@ -7,12 +7,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -21,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.kfc_chainstores_mobile.adapters.ListMonAnAdapter;
+import com.example.kfc_chainstores_mobile.database.GioHangHelper;
 import com.example.kfc_chainstores_mobile.model.LoaiMon;
 import com.example.kfc_chainstores_mobile.model.MonAn;
 import com.google.android.material.tabs.TabLayout;
@@ -51,10 +55,17 @@ public class ListMonAnActivity extends AppCompatActivity {
     ListMonAnAdapter listMonAnAdapter;
     List<MonAn> monAnList;
 
+    GioHangHelper gioHangHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_mon_an);
+
+        getSupportActionBar().setTitle("Chọn món");
+
+        gioHangHelper = new GioHangHelper(this, null);
+        gioHangHelper.clear();
 
         tabLayout = findViewById(R.id.tab_loaiMon);
         loaiMonList = new ArrayList<>();
@@ -94,6 +105,12 @@ public class ListMonAnActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        gioHangHelper.close();
+    }
+
     public void openDialog(MonAn monAn) {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -122,7 +139,7 @@ public class ListMonAnActivity extends AppCompatActivity {
         Button addCart = dialog.findViewById(R.id.btn_addCart);
         Button buyNow = dialog.findViewById(R.id.btn_buyNow);
 
-        String imageUrl = "http://10.0.2.2:8080/KFC_ChainStores/public/assets/client/img/"+monAn.getImage_path();
+        String imageUrl = "http://10.0.2.2/KFC_ChainStores/public/assets/client/img/"+monAn.getImage_path();
         Picasso.get().load(imageUrl).into(anh);
 
         tv_tenMonAn.setText(monAn.getTenMonAn());
@@ -132,7 +149,13 @@ public class ListMonAnActivity extends AppCompatActivity {
         String formattedNumber = formatter.format(number);
         tv_gia.setText(formattedNumber);
 
-        minus.setEnabled(false);
+        if (monAn.getSoLuongDat() == 0) {
+            tv_soluong.setText("1");
+            minus.setEnabled(false);
+        }
+        else {
+            tv_soluong.setText(String.valueOf(monAn.getSoLuongDat()));
+        }
 
         close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,12 +186,29 @@ public class ListMonAnActivity extends AppCompatActivity {
             }
         });
 
+        addCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Cursor cursor = gioHangHelper.selectSoLuong(monAn);
+                cursor.moveToNext();
+                if (cursor.getInt(0) == 1) {
+                    gioHangHelper.updateSoLuong(monAn, tv_soluong.getText().toString());
+                    monAn.setSoLuongDat(Integer.parseInt(tv_soluong.getText().toString()));
+                }
+                else {
+                    gioHangHelper.insertGioHang(monAn, tv_soluong.getText().toString());
+                    monAn.setSoLuongDat(Integer.parseInt(tv_soluong.getText().toString()));
+                }
+                dialog.dismiss();
+            }
+        });
+
         dialog.show();
     }
 
     public void getLoaiMonAn() {
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url("http://10.0.2.2:8080/KFC_ChainStores/loaiMon/getAll").build();
+        Request request = new Request.Builder().url("http://10.0.2.2/KFC_ChainStores/loaiMon/getAll").build();
 
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -206,7 +246,7 @@ public class ListMonAnActivity extends AppCompatActivity {
 
     public void getListMonAn(int id_loaiMonAn) {
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url("http://10.0.2.2:8080/KFC_ChainStores/monAn/getMonAnById/"+id_loaiMonAn).build();
+        Request request = new Request.Builder().url("http://10.0.2.2/KFC_ChainStores/monAn/getMonAnById/"+id_loaiMonAn).build();
 
         monAnList.clear();
 
@@ -259,5 +299,16 @@ public class ListMonAnActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.action_bar, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.cart:
+                Intent intent = new Intent(this, GioHangActivity.class);
+                startActivity(intent);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

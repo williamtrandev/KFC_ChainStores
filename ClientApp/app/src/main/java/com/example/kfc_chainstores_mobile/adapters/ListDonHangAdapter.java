@@ -69,7 +69,7 @@ public class ListDonHangAdapter extends RecyclerView.Adapter<ListDonHangAdapter.
             @Override
             public void onClick(View v) {
                 madonhang = donHang.getMaDonHang();
-                Request request = new Request.Builder().url("http://10.0.2.2:8080/KFC_ChainStores/donHang/updateTrangThaiDonHangMobile/"+donHang.getMaDonHang()+"/Hoàn thành").build();
+                Request request = new Request.Builder().url("http://10.0.2.2/KFC_ChainStores/donHang/updateTrangThaiDonHangMobile/"+donHang.getMaDonHang()+"/Hoàn thành").build();
                 OkHttpClient client = new OkHttpClient();
                 client.newCall(request).enqueue(new Callback() {
                     @Override
@@ -96,7 +96,7 @@ public class ListDonHangAdapter extends RecyclerView.Adapter<ListDonHangAdapter.
                         }
                     }
                 });
-                Request subrequest = new Request.Builder().url("http://10.0.2.2:8080/KFC_ChainStores/thanhToan/update/" + madonhang + "/1").build();
+                Request subrequest = new Request.Builder().url("http://10.0.2.2/KFC_ChainStores/thanhToan/update/" + madonhang + "/1").build();
 
                 client.newCall(subrequest).enqueue(new Callback() {
                     @Override

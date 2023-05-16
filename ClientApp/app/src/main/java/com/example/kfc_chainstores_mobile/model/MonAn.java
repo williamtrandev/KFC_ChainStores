@@ -7,6 +7,7 @@ public class MonAn {
     private double gia;
     private String image_path;
     private int id_loaiMon;
+    private int soLuongDat;
 
     public MonAn(int maMonAn, String tenMonAn, String mota, double gia, String image_path, int id_loaiMon) {
         this.maMonAn = maMonAn;
@@ -15,6 +16,15 @@ public class MonAn {
         this.gia = gia;
         this.image_path = image_path;
         this.id_loaiMon = id_loaiMon;
+        this.soLuongDat = 0;
+    }
+
+    public MonAn(int maMonAn, String tenMonAn, double gia, String image_path, int soLuongDat) {
+        this.maMonAn = maMonAn;
+        this.tenMonAn = tenMonAn;
+        this.gia = gia;
+        this.image_path = image_path;
+        this.soLuongDat = soLuongDat;
     }
 
     public int getMaMonAn() {
@@ -39,5 +49,13 @@ public class MonAn {
 
     public int getId_loaiMon() {
         return id_loaiMon;
+    }
+
+    public int getSoLuongDat() {
+        return soLuongDat;
+    }
+
+    public void setSoLuongDat(int soLuongDat) {
+        this.soLuongDat = soLuongDat;
     }
 }

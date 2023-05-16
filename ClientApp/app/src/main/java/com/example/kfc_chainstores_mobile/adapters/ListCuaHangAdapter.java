@@ -18,7 +18,6 @@ import java.util.List;
 
 public class ListCuaHangAdapter extends BaseAdapter {
 
-//    TextView tv_tenCuaHang, tv_chiNhanh;
     List<CuaHang> cuaHangList;
     LayoutInflater layoutInflater;
 

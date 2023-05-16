@@ -63,7 +63,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
 
@@ -85,5 +86,13 @@
                 android:gravity="center"
                 android:text="Lịch sử" />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:drawableLeft="@drawable/ic_baseline_logout_24"
+            android:text="Đăng xuất" />
     </LinearLayout>
 </FrameLayout>

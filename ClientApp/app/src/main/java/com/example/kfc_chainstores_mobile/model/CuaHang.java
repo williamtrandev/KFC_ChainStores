@@ -18,19 +18,19 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class CuaHang {
-    private String maCuaHang;
+    private int maCuaHang;
     private String tenCuaHang;
     private String chiNhanh;
 
     public CuaHang() {}
 
-    public CuaHang(String maCuaHang, String tenCuaHang, String chiNhanh) {
+    public CuaHang(int maCuaHang, String tenCuaHang, String chiNhanh) {
         this.maCuaHang = maCuaHang;
         this.tenCuaHang = tenCuaHang;
         this.chiNhanh = chiNhanh;
     }
 
-    public String getMaCuaHang() {
+    public int getMaCuaHang() {
         return maCuaHang;
     }
 

@@ -105,7 +105,7 @@ public class DonHangFragment extends Fragment {
     public void getAllDonHang() {
         OkHttpClient client = new OkHttpClient();
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("login_information", MODE_PRIVATE);
-        Request request = new Request.Builder().url("http://10.0.2.2:8080/KFC_ChainStores/donHang/getAllDonHangTheoNVGiao/" + sharedPreferences.getInt("maNhanVien", 0)).build();
+        Request request = new Request.Builder().url("http://10.0.2.2/KFC_ChainStores/donHang/getAllDonHangTheoNVGiao/" + sharedPreferences.getInt("maNhanVien", 0)).build();
 
         client.newCall(request).enqueue(new Callback() {
             @Override

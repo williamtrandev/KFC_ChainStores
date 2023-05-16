@@ -1,6 +1,8 @@
 package com.example.kfc_chainstores_mobile;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -101,8 +103,14 @@ public class BookingFragment extends Fragment {
         lvCuaHang.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                ListMonAnFragment listMonAnFragment = new ListMonAnFragment();
-//                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, listMonAnFragment).commit();
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("donhang", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                CuaHang cuaHang = cuaHangList.get(i);
+                editor.putInt("maCuaHang", cuaHang.getMaCuaHang());
+                editor.putString("tenCuaHang", cuaHang.getTenCuaHang());
+                editor.putString("chiNhanh", cuaHang.getChiNhanh());
+                editor.apply();
+
                 Intent intent = new Intent(getActivity(), ListMonAnActivity.class);
                 startActivity(intent);
             }
@@ -113,7 +121,7 @@ public class BookingFragment extends Fragment {
 
     public void getCuaHang() {
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url("http://10.0.2.2:8080/KFC_ChainStores/cuaHang/getAll").build();
+        Request request = new Request.Builder().url("http://10.0.2.2/KFC_ChainStores/cuaHang/getAll").build();
 
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -128,7 +136,7 @@ public class BookingFragment extends Fragment {
                     JSONArray jsonRes = new JSONArray(responseData);
                     for (int i = 0; i < jsonRes.length(); i++) {
                         JSONObject json = jsonRes.getJSONObject(i);
-                        String maCuaHang = json.getString("maCuaHang");
+                        int maCuaHang = json.getInt("maCuaHang");
                         String tenCuaHang = json.getString("tenCuaHang");
                         String chiNhanh = json.getString("chiNhanh");
                         CuaHang cuaHang = new CuaHang(maCuaHang, tenCuaHang, chiNhanh);

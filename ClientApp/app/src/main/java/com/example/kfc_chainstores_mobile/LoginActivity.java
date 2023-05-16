@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
         groupChoose = findViewById(R.id.rg_account);
         sharedPreferences = getSharedPreferences("login_information", MODE_PRIVATE);
         if (sharedPreferences.contains("remember") && sharedPreferences.getBoolean("remember", false)) {
-            goToMainActivity(isKhachHangLastLogin);
+            goToMainActivity(sharedPreferences.getBoolean("isKhachHangLastLogin", true));
         }
 
         passForgot.setPaintFlags(passForgot.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
@@ -130,7 +130,7 @@ public class LoginActivity extends AppCompatActivity {
             View radioButton = groupChoose.findViewById(radioButtonID);
             int idx = groupChoose.indexOfChild(radioButton);
             if(idx == 0) {
-                Request request = new Request.Builder().url("http://10.0.2.2:8080/KFC_ChainStores/khachHang/authenticate/"+sdt+"/"+pass).build();
+                Request request = new Request.Builder().url("http://10.0.2.2/KFC_ChainStores/khachHang/authenticate/"+sdt+"/"+pass).build();
 
                 client.newCall(request).enqueue(new Callback() {
                     @Override
@@ -159,8 +159,7 @@ public class LoginActivity extends AppCompatActivity {
                                 editor.putFloat("points", (float) data.getDouble("diem"));
                                 editor.apply();
                                 goToMainActivity(true);
-                                isKhachHangLastLogin = true;
-
+                                sharedPreferences.edit().putBoolean("isKhachHangLastLogin", true);
                             }
                             else {
                                 runOnUiThread(new Runnable() {
@@ -176,7 +175,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
             } else {
-                Request request = new Request.Builder().url("http://10.0.2.2:8080/KFC_ChainStores/nhanVien/authenticateMobile/"+sdt+"/"+pass).build();
+                Request request = new Request.Builder().url("http://10.0.2.2/KFC_ChainStores/nhanVien/authenticateMobile/"+sdt+"/"+pass).build();
 
                 client.newCall(request).enqueue(new Callback() {
                     @Override
@@ -204,7 +203,7 @@ public class LoginActivity extends AppCompatActivity {
                                 editor.putString("diachi", data.getString("diaChi"));
                                 editor.apply();
                                 goToMainActivity(false);
-                                isKhachHangLastLogin = false;
+                                sharedPreferences.edit().putBoolean("isKhachHangLastLogin", false);
 
                             }
                             else {
@@ -230,9 +229,11 @@ public class LoginActivity extends AppCompatActivity {
         if(isKhachhang) {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
+            finish();
         } else {
             Intent intent = new Intent(LoginActivity.this, MainActivityNhanVien.class);
             startActivity(intent);
+            finish();
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.example.kfc_chainstores_mobile;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 /**
@@ -59,6 +61,7 @@ public class AccountFragment extends Fragment {
     }
 
     TextView ten, sdt, email, diem;
+    Button logout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,11 +75,22 @@ public class AccountFragment extends Fragment {
         sdt = view.findViewById(R.id.tv_sdt_tk);
         email = view.findViewById(R.id.tv_email);
         diem = view.findViewById(R.id.tv_diem);
+        logout = view.findViewById(R.id.btn_logout);
 
         ten.setText(sharedPreferences.getString("name", "Luan"));
         sdt.setText(sharedPreferences.getString("phoneNumber", "0123456789"));
         email.setText(sharedPreferences.getString("email", "email@gamil.com"));
         diem.setText(String.format("Điểm: %s", sharedPreferences.getFloat("points", 0)));
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sharedPreferences.edit().clear().apply();
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
 
         return view;
     }
