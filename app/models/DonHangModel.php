@@ -158,11 +158,11 @@ class DonHangModel extends BaseModel
 		$res->execute();
 		return $res->get_result()->fetch_assoc()['tongDoanhThu'];
 	}
-	public function insertDHOnline($sdtKhachHang, $tongTien, $maCuaHang, $diaChiGiaoHang)
+	public function insertDHOnline($sdtKhachHang, $tongTien, $maCuaHang, $diaChiGiaoHang, $pttt)
 	{
 		$flag = false;
 		$res = $this->db->prepare("insert into donhang (sdtKhachHang, tongTien, maCuaHang) values(?,?,?)");
-		$res->bind_param("sdii", $sdtKhachHang, $tongTien, $maCuaHang);
+		$res->bind_param("sdi", $sdtKhachHang, $tongTien, $maCuaHang);
 		$res->execute();
 		$flag = $res->affected_rows == 1;
 		if ($flag) {
@@ -171,6 +171,12 @@ class DonHangModel extends BaseModel
 			$res1->bind_param("is", $maDonHang, $diaChiGiaoHang);
 			$res1->execute();
 			$flag = $res1->affected_rows == 1;
+			if ($flag) {
+				$res2 = $this->db->prepare("insert into thanhtoan (maDonHang, phuongThucThanhToan, trangThaiThanhToan) values(?,?,0)");
+				$res2->bind_param("is", $maDonHang, $pttt);
+				$res2->execute();
+				$flag = $res2->affected_rows == 1;
+			}
 		}
 		return json_encode(array('status' => $flag));
 	}

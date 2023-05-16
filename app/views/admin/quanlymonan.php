@@ -12,7 +12,7 @@
 			<th>Mô tả</th>
 			<th>Giá</th>
 			<th>Ảnh</th>
-			<th>Sửa/Xóa</th>
+			<th>Thêm NL/Sửa/Xóa</th>
 		</thead>
 		<tbody class="body-revenue">
 			<?php
@@ -27,7 +27,8 @@
 						<td>$price</td>
 						<td><div class='w-100 d-flex justify-content-center'><img src='$img_path' style='width: 50px; height: 50px'></div></td>
 						<td>
-								<i class='fa-solid fa-marker me-4 icon-update' style='font-size: 1.4rem; color: green; cursor: pointer' data-type='$item->id_loaimon' onclick='handleEdit(this, $item->maMonAn)'></i>
+								<i class='fa-solid fa-wheat-awn-circle-exclamation me-3' style='font-size: 1.4rem; color: blue; cursor: pointer'></i>
+								<i class='fa-solid fa-marker me-3 icon-update' style='font-size: 1.4rem; color: green; cursor: pointer' data-type='$item->id_loaimon' onclick='handleEdit(this, $item->maMonAn)'></i>
 								<i class='fa-solid fa-trash icon-remove' style='font-size: 1.4rem; color: red; cursor: pointer'></i>
 						</td>
 					</tr>";
@@ -48,7 +49,7 @@
 			<th>Mô tả</th>
 			<th>Giá</th>
 			<th>Ảnh</th>
-			<th>Sửa/Xóa</th>
+			<th>Thêm NL/Sửa/Xóa</th>
 		</thead>
 		<tbody class="body-revenue">
 			<?php
@@ -63,7 +64,8 @@
 						<td>$price</td>
 						<td><div class='w-100 d-flex justify-content-center'><img src='$img_path' style='width: 50px; height: 50px'></div></td>
 						<td>
-								<i class='fa-solid fa-marker me-4 icon-update' style='font-size: 1.4rem; color: green; cursor: pointer' data-type='$item->id_loaimon' onclick='handleEdit(this, $item->maMonAn)'></i>
+								<i class='fa-solid fa-wheat-awn-circle-exclamation me-3' style='font-size: 1.4rem; color: blue; cursor: pointer'></i>
+								<i class='fa-solid fa-marker me-3 icon-update' style='font-size: 1.4rem; color: green; cursor: pointer' data-type='$item->id_loaimon' onclick='handleEdit(this, $item->maMonAn)'></i>
 								<i class='fa-solid fa-trash icon-remove' style='font-size: 1.4rem; color: red; cursor: pointer'></i>
 						</td>
 					</tr>";
@@ -84,7 +86,7 @@
 			<th>Mô tả</th>
 			<th>Giá</th>
 			<th>Ảnh</th>
-			<th>Sửa/Xóa</th>
+			<th>Thêm NL/Sửa/Xóa</th>
 		</thead>
 		<tbody class="body-revenue">
 			<?php
@@ -99,7 +101,8 @@
 						<td>$price</td>
 						<td><div class='w-100 d-flex justify-content-center'><img src='$img_path' style='width: 50px; height: 50px'></div></td>
 						<td>
-								<i class='fa-solid fa-marker me-4 icon-update' style='font-size: 1.4rem; color: green; cursor: pointer' data-type='$item->id_loaimon' onclick='handleEdit(this, $item->maMonAn)'></i>
+								<i class='fa-solid fa-wheat-awn-circle-exclamation me-3' style='font-size: 1.4rem; color: blue; cursor: pointer'></i>
+								<i class='fa-solid fa-marker me-3 icon-update' style='font-size: 1.4rem; color: green; cursor: pointer' data-type='$item->id_loaimon' onclick='handleEdit(this, $item->maMonAn)'></i>
 								<i class='fa-solid fa-trash icon-remove' style='font-size: 1.4rem; color: red; cursor: pointer'></i>
 						</td>
 					</tr>";
@@ -120,7 +123,7 @@
 			<th>Mô tả</th>
 			<th>Giá</th>
 			<th>Ảnh</th>
-			<th>Sửa/Xóa</th>
+			<th>Thêm NL/Sửa/Xóa</th>
 		</thead>
 		<tbody class="body-revenue">
 			<?php
@@ -135,7 +138,8 @@
 						<td>$price</td>
 						<td><div class='w-100 d-flex justify-content-center'><img src='$img_path' style='width: 50px; height: 50px'></div></td>
 						<td>
-								<i class='fa-solid fa-marker me-4 icon-update' style='font-size: 1.4rem; color: green; cursor: pointer' data-type='$item->id_loaimon' onclick='handleEdit(this, $item->maMonAn)'></i>
+								<i class='fa-solid fa-wheat-awn-circle-exclamation me-3' style='font-size: 1.4rem; color: blue; cursor: pointer'></i>
+								<i class='fa-solid fa-marker me-3 icon-update' style='font-size: 1.4rem; color: green; cursor: pointer' data-type='$item->id_loaimon' onclick='handleEdit(this, $item->maMonAn)'></i>
 								<i class='fa-solid fa-trash icon-remove' style='font-size: 1.4rem; color: red; cursor: pointer'></i>
 						</td>
 					</tr>";
@@ -156,7 +160,7 @@
 			<th>Mô tả</th>
 			<th>Giá</th>
 			<th>Ảnh</th>
-			<th>Sửa/Xóa</th>
+			<th>Thêm NL/Sửa/Xóa</th>
 		</thead>
 		<tbody class="body-revenue">
 			<?php
@@ -171,7 +175,8 @@
 						<td>$price</td>
 						<td><div class='w-100 d-flex justify-content-center'><img src='$img_path' style='width: 50px; height: 50px'></div></td>
 						<td>
-								<i class='fa-solid fa-marker me-4 icon-update' style='font-size: 1.4rem; color: green; cursor: pointer' data-type='$item->id_loaimon' onclick='handleEdit(this, $item->maMonAn)'></i>
+								<i class='fa-solid fa-wheat-awn-circle-exclamation me-3' style='font-size: 1.4rem; color: blue; cursor: pointer'></i>
+								<i class='fa-solid fa-marker me-3 icon-update' style='font-size: 1.4rem; color: green; cursor: pointer' data-type='$item->id_loaimon' onclick='handleEdit(this, $item->maMonAn)'></i>
 								<i class='fa-solid fa-trash icon-remove' style='font-size: 1.4rem; color: red; cursor: pointer'></i>
 						</td>
 					</tr>";
@@ -192,7 +197,7 @@
 			<th>Mô tả</th>
 			<th>Giá</th>
 			<th>Ảnh</th>
-			<th>Sửa/Xóa</th>
+			<th>Thêm NL/Sửa/Xóa</th>
 		</thead>
 		<tbody class="body-revenue">
 			<?php
@@ -207,7 +212,8 @@
 						<td>$price</td>
 						<td><div class='w-100 d-flex justify-content-center'><img src='$img_path' style='width: 50px; height: 50px'></div></td>
 						<td>
-								<i class='fa-solid fa-marker me-4 icon-update' style='font-size: 1.4rem; color: green; cursor: pointer' data-type='$item->id_loaimon' onclick='handleEdit(this, $item->maMonAn)'></i>
+								<i class='fa-solid fa-wheat-awn-circle-exclamation me-3' style='font-size: 1.4rem; color: blue; cursor: pointer'></i>
+								<i class='fa-solid fa-marker me-3 icon-update' style='font-size: 1.4rem; color: green; cursor: pointer' data-type='$item->id_loaimon' onclick='handleEdit(this, $item->maMonAn)'></i>
 								<i class='fa-solid fa-trash icon-remove' style='font-size: 1.4rem; color: red; cursor: pointer' onclick='removeFood()'></i>
 						</td>
 					</tr>";
@@ -228,7 +234,7 @@
 			<th>Mô tả</th>
 			<th>Giá</th>
 			<th>Ảnh</th>
-			<th>Sửa/Xóa</th>
+			<th>Thêm NL/Sửa/Xóa</th>
 		</thead>
 		<tbody class="body-revenue">
 			<?php
@@ -243,7 +249,8 @@
 						<td>$price</td>
 						<td><div class='w-100 d-flex justify-content-center'><img src='$img_path' style='width: 50px; height: 50px'></div></td>
 						<td>
-								<i class='fa-solid fa-marker me-4 icon-update' style='font-size: 1.4rem; color: green; cursor: pointer' data-type='$item->id_loaimon' onclick='handleEdit(this, $item->maMonAn)'></i>
+								<i class='fa-solid fa-wheat-awn-circle-exclamation me-3' style='font-size: 1.4rem; color: blue; cursor: pointer'></i>
+								<i class='fa-solid fa-marker me-3 icon-update' style='font-size: 1.4rem; color: green; cursor: pointer' data-type='$item->id_loaimon' onclick='handleEdit(this, $item->maMonAn)'></i>
 								<i class='fa-solid fa-trash icon-remove' style='font-size: 1.4rem; color: red; cursor: pointer' onclick='removeFood()'></i>
 						</td>
 					</tr>";
@@ -371,7 +378,36 @@
 		</div>
 	</div>
 </div>
+
+
+<div class="modal fade" id="addNLModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title text-reset">Thêm nguyên liệu</h4>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body text-reset text-muted">
+
+			</div>
+
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success btn-addNL">Thêm</button>
+			</div>
+
+		</div>
+	</div>
+</div>
 <script>
+	$(function() {
+		$("#addNLModal").modal("show");
+	})
+
 	function handleEdit(elem, maMonAn) {
 		let tds = $(elem).closest("tr").find("td");
 		let name = $(tds[1]).text();

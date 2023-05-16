@@ -41,7 +41,6 @@ table td,
 table th {
     vertical-align: middle !important;
     text-overflow: ellipsis;
-    white-space: nowrap;
     overflow: hidden;
     text-align: center;
 }
