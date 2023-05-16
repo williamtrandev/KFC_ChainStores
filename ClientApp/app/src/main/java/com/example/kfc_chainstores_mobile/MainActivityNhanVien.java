@@ -11,7 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivityNhanVien extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     DonHangFragment donHangFragment = new DonHangFragment();
-    AccountFragment accountFragment = new AccountFragment();
+    AccountNVFragment accountFragment = new AccountNVFragment();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

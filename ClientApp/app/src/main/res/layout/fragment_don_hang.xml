@@ -18,6 +18,7 @@
             android:layout_height="34dp"
             android:text="Danh sách đơn giao"
             android:textAlignment="center"
+            android:textColor="#673AB7"
             android:textSize="20sp" />
 
         <androidx.recyclerview.widget.RecyclerView

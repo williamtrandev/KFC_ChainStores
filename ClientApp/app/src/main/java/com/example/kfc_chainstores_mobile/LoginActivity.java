@@ -197,7 +197,11 @@ public class LoginActivity extends AppCompatActivity {
                                 if (remember.isChecked()) {
                                     editor.putBoolean("remember", true);
                                 }
-                                editor.putInt("maNhanVien", data.getInt("maNhanVien"));
+                                editor.putString("phoneNumber", sdt);
+                                editor.putString("name", data.getString("tenNhanVien"));
+                                editor.putString("gioitinh", data.getString("gioiTinh"));
+                                editor.putString("ngaysinh", data.getString("ngaySinh"));
+                                editor.putString("diachi", data.getString("diaChi"));
                                 editor.apply();
                                 goToMainActivity(false);
                                 isKhachHangLastLogin = false;
