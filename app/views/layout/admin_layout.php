@@ -77,7 +77,7 @@
 			if (!isset($info))
 				$info = '';
 			if (isset($qlk)) {
-				$this->render($content, ['info' => $info, 'hh' => $hh, 'ncc' => $ncc]);
+				$this->render($content, ['info' => $info, 'hh' => $hh, 'ncc' => $ncc, 'hhtk' => $hhtk]);
 			} else if (isset($tkln)) {
 				$this->render($content, ['data' => $data_pass, 'info' => $info, 'ndh' => $ndh, 'tongdt' => $tongdt]);
 			} else if (isset($dh)) {

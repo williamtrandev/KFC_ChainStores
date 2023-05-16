@@ -1,19 +1,6 @@
 <div class="w-100 d-flex justify-content-center">
-	<button class="btn me-4" style="background-color: #695cfe; font-size: 1.2rem; color: #f6f5ff" data-bs-toggle="modal" data-bs-target="#nhModal">Nhập hàng mới</button>
+	<button class="btn me-4" style="background-color: #695cfe; font-size: 1.2rem; color: #f6f5ff" data-bs-toggle="modal" data-bs-target="#modalOrder">Nhập hàng mới</button>
 	<button class="btn me-4" style="background-color: #695cfe; font-size: 1.2rem; color: #f6f5ff" data-bs-toggle="modal" data-bs-target="#addModal">Thêm nhà cung cấp</button>
-	<style>
-		.circle-nhaphang {
-			width: 40px;
-			height: 40px;
-			border-radius: 50%;
-			background-color: #695cfe;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			cursor: pointer;
-		}
-	</style>
-	<div class="circle-nhaphang"><i class="fa-solid fa-warehouse" style="color: white"></i></div>
 </div>
 <div class="staticFilm">
 	<div class="head">
@@ -31,7 +18,7 @@
 			<?php
 			$i = 1;
 			foreach ($ncc as $item) {
-				echo "<tr data-id=$item->maNhaCungCap>
+				echo "<tr data-id=$item->maNhaCungCap style='cursor:pointer'>
 						<td data-id=$item->maNhaCungCap>$i</td>
 						<td>$item->tenNhaCungCap</td>
 						<td>$item->sdt</td>
@@ -49,7 +36,7 @@
 </div>
 <div class="staticFilm">
 	<div class="head">
-		<h1>Danh sách hàng hóa</h1>
+		<h1>Danh sách hàng hóa theo nhà cung cấp</h1>
 	</div>
 	<table>
 		<thead>
@@ -59,19 +46,7 @@
 			<th>Giá nhập</th>
 		</thead>
 		<tbody class="body-revenue tbody-hh">
-			<?php
-			$i = 1;
-			foreach ($hh as $item) {
-				$gianhap = number_format($item->giaNhap, 0, ",", ".") . "đ";
-				echo "<tr data-id=$item->maHang data-name='$item->tenHang' data-price=$item->giaNhap style='cursor: pointer;'>
-						<td data-id=$item->maHang>$i</td>
-						<td>$item->tenHang</td>
-						<td>$item->donViTinh</td>
-						<td>$gianhap</td>
-					</tr>";
-				$i++;
-			}
-			?>
+
 		</tbody>
 	</table>
 </div>
@@ -84,12 +59,22 @@
 			<th>STT</th>
 			<th>Tên hàng hóa</th>
 			<th>Đơn vị tính</th>
+			<th>Tồn kho</th>
 			<th>Ngày nhập</th>
-			<th>Sửa/Xóa</th>
 		</thead>
 		<tbody class="body-revenue">
 			<?php
-
+			$i = 1;
+			foreach ($hh as $item) {
+				echo "<tr>
+						<td>$i</td>
+						<td>$item->tenHang</td>
+						<td>$item->donViTinh</td>
+						<td>$item->soLuong</td>
+						<td>$item->ngayLap</td>
+					</tr>";
+				$i++;
+			}
 			?>
 		</tbody>
 	</table>
@@ -174,62 +159,6 @@
 		</div>
 	</div>
 </div>
-<div class="modal fade" id="nhModal">
-	<div class="modal-dialog">
-		<div class="modal-content">
-
-			<!-- Modal Header -->
-			<div class="modal-header">
-				<h4 class="modal-title text-reset">Lập phiếu nhập kho</h4>
-				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-			</div>
-
-			<!-- Modal body -->
-			<div class="modal-body text-reset text-muted">
-				<form>
-					<div class="mb-3">
-						<label for="recipient-name" class="col-form-label">:</label>
-						<input type="text" class="form-control tennv_update" required>
-					</div>
-					<div class="mb-3">
-						<label for="recipient-name" class="col-form-label">Giới tính:</label>
-						<select class="form-select gioitinh_update">
-							<option value="00" selected class="female">Nữ</option>
-							<option value="1" class="male">Nam</option>
-						</select>
-					</div>
-					<div class="mb-3">
-						<label for="recipient-name" class="col-form-label">Ngày sinh:</label>
-						<input type="date" class="form-control ngaysinhnv_update" required>
-					</div>
-					<div class="mb-3">
-						<label for="" class="col-form-label">Địa chỉ:</label>
-						<input type="text" class="form-control diachi_update" required>
-					</div>
-					<div class="mb-3">
-						<label for="" class="col-form-label">Chức vụ:</label>
-						<select class="form-select chucvu_update">
-							<option value="Nhân viên bán hàng" class="nvbh">Nhân viên bán hàng</option>
-							<option value="Nhân viên giao hàng" class="nvgh">Nhân viên giao hàng</option>
-							<option value="Đầu bếp" class="nvdb">Đầu bếp</option>
-						</select>
-					</div>
-					<div class="mb-3">
-						<label for="" class="col-form-label">Mật khẩu:</label>
-						<input type="text" class="form-control matkhau_update" required>
-					</div>
-				</form>
-			</div>
-
-			<!-- Modal footer -->
-			<div class="modal-footer">
-				<button type="button" class="btn btn-success btn-updateNV">Thay đổi</button>
-			</div>
-
-		</div>
-	</div>
-</div>
-
 
 
 <div class="modal fade" id="removeModal">
@@ -305,8 +234,27 @@
 
 <script>
 	$(function() {
-		$(".tbody-ncc").on("click", "tr", function() {
-			fetch(`<?php echo _WEB_ROOT ?>/hangHoa/getHangHoaTheoNCC/${tenncc}/${sdt}/${diachi}/<?php echo json_decode($_SESSION['user'])->maCuaHang ?>`)
+		let mancc_click = null;
+		$(".tbody-ncc").on("click", "tr", function(e) {
+			let mancc = $(e.target).closest("tr").attr("data-id");
+			mancc_click = mancc;
+			$(".tbody-hh").children().remove();
+			fetch(`<?php echo _WEB_ROOT ?>/hangHoa/getHangHoaTheoNCC/${mancc}`)
+				.then(res => res.json())
+				.then(data => {
+					let tr = "";
+					let i = 1;
+					data.forEach(function(element) {
+						tr +=
+							`<tr style='cursor:pointer' data-id=${element.maHang} data-price=${element.giaNhap} data-name='${element.tenHang}'>
+							<td>${i++}</td>
+							<td>${element.tenHang}</td>
+							<td>${element.donViTinh}</td>
+							<td>${element.giaNhap}</td>
+						</tr>`
+					})
+					$(".tbody-hh").append(tr);
+				})
 		})
 		$(".btn-addNCC").click((e) => {
 			let tenncc = $(".tenncc").val();
@@ -492,9 +440,8 @@
 		})
 
 		$(".btn-thanhtoan").click(() => {
-			let sdt = $(".sdt").val() == "" ? "0123456789" : $(".sdt").val();
 			let total = parseInt($(".total_order").text());
-			fetch(`<?php echo _WEB_ROOT ?>/phieuNhapHang/insert/${sdt}/${total}/<?php echo json_decode($_SESSION['user'])->maNhanVien ?>/<?php echo json_decode($_SESSION['user'])->maCuaHang ?>`)
+			fetch(`<?php echo _WEB_ROOT ?>/phieuNhapHang/insert/${mancc_click}/${total}/<?php echo json_decode($_SESSION['user'])->maCuaHang ?>`)
 				.then(res => res.text())
 				.then(data => {
 					if (data == 1) {
@@ -505,7 +452,7 @@
 							.then(data => {
 								let listNhapHang = JSON.parse(localStorage.getItem("listNhapHang"));
 								listNhapHang.forEach(element => {
-									fetch(`<?php echo _WEB_ROOT ?>/chiTietPhieuNhapHang/insert/${data}/${element.mamonan}/${element.soluong}`)
+									fetch(`<?php echo _WEB_ROOT ?>/chiTietPhieuNhap/insert/${data}/${element.mamonan}/${element.soluong}/<?php echo json_decode($_SESSION['user'])->maCuaHang ?>`)
 										.catch(err => console.log("Loi insert chitietphieunhap"))
 								});
 							});
@@ -513,6 +460,7 @@
 						$(".total_order").text("");
 						$("#modalOrder").modal("hide");
 						$(".number-items").text("");
+						location.reload();
 					} else {
 						alert("Có gì đó đã xảy ra");
 					}

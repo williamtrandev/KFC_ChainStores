@@ -70,4 +70,7 @@ class DonHangController extends BaseController
 	{
 		echo $this->model_dh->updateTrangThaiDonHangMobile($maDonHang, $trangThai);
 	}
+	public function insertDHOnline($sdtKhachHang, $tongTien, $maCuaHang, $diaChiGiaoHang) {
+		echo $this->model_dh->insertDHOnline($sdtKhachHang, $tongTien, $maCuaHang, $diaChiGiaoHang);
+	}
 }

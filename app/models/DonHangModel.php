@@ -158,4 +158,20 @@ class DonHangModel extends BaseModel
 		$res->execute();
 		return $res->get_result()->fetch_assoc()['tongDoanhThu'];
 	}
+	public function insertDHOnline($sdtKhachHang, $tongTien, $maCuaHang, $diaChiGiaoHang)
+	{
+		$flag = false;
+		$res = $this->db->prepare("insert into donhang (sdtKhachHang, tongTien, maCuaHang) values(?,?,?)");
+		$res->bind_param("sdii", $sdtKhachHang, $tongTien, $maCuaHang);
+		$res->execute();
+		$flag = $res->affected_rows == 1;
+		if ($flag) {
+			$maDonHang = $this->getMaDonHangMoiNhat($maCuaHang);
+			$res1 = $this->db->prepare("insert into donhangonline (maDonHang, diaChiGiaoHang) values(?,?)");
+			$res1->bind_param("is", $maDonHang, $diaChiGiaoHang);
+			$res1->execute();
+			$flag = $res1->affected_rows == 1;
+		}
+		return json_encode(array('status' => $flag));
+	}
 }

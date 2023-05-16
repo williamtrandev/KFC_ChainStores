@@ -18,7 +18,9 @@ class PhieuNhapHangController extends BaseController
 	{
 		echo $this->model_pnh->getMaMoiNhat($maCuaHang);
 	}
-	public function insert() {
-		
+	public function insert($maNhaCungCap, $tongTien, $maCuaHang)
+	{
+		echo $this->model_pnh->insert($maNhaCungCap, $tongTien, $maCuaHang);
 	}
+	
 }

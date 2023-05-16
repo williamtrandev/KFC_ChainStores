@@ -30,4 +30,25 @@ class PhieuNhapHangModel extends BaseModel
 		$result = $res->get_result();
 		return $result->fetch_assoc()['tongPhieuNhap'];
 	}
+	public function insertCT($maPhieu, $maHang, $soluong, $maCuaHang)
+	{
+		$flag = false;
+		$res = $this->db->prepare("insert into chitietphieunhaphang (maPhieuNhap, maHang, soLuong) values(?,?,?)");
+		$res->bind_param("iii", $maPhieu, $maHang, $soluong);
+		$res->execute();
+		$flag = $res->affected_rows == 1;
+		$res = $this->db->prepare("insert into kho (maPhieuNhap, maHang, soLuong, maCuaHang) values(?,?,?,?)");
+		$res->bind_param("iiii", $maPhieu, $maHang, $soluong, $maCuaHang);
+		$res->execute();
+		$flag = $res->affected_rows == 1;
+		return $flag;
+	}
+	public function getMaMoiNhat($maCuaHang)
+	{
+		$res = $this->db->prepare("select maPhieuNhap from phieunhaphang where maCuaHang=? order by maPhieuNhap desc limit 1");
+		$res->bind_param("i", $maCuaHang);
+		$res->execute();
+		$result = $res->get_result();
+		return $result->fetch_assoc()['maPhieuNhap'];
+	}
 }

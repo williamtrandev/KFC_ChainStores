@@ -4,8 +4,8 @@ class QuanLyController extends BaseController
 	public $data = [];
 	public function index()
 	{
-		if(!isset($_SESSION['user'])) {
-			header("Location: ". _WEB_ROOT."/nhanVien/login");
+		if (!isset($_SESSION['user'])) {
+			header("Location: " . _WEB_ROOT . "/nhanVien/login");
 		}
 		$this->data['title_page'] = 'Thống kê lợi nhuận';
 		$this->data['content'] = 'admin/thongkeloinhuan';
@@ -48,8 +48,9 @@ class QuanLyController extends BaseController
 		$this->data['ndho'] = $this->model("DonHangModel")->getNumberDonHangOnlineDaBan($maCuaHang);
 		$this->render("layout/admin_layout", $this->data);
 	}
-	
-	public function storehouse() {
+
+	public function storehouse()
+	{
 		if (!isset($_SESSION['user'])) {
 			header("Location: " . _WEB_ROOT . "/nhanVien/login");
 		}
@@ -57,9 +58,9 @@ class QuanLyController extends BaseController
 		$this->data['title_page'] = 'Quản lý kho';
 		$this->data['content'] = 'admin/quanlykho';
 		$this->data['qlk'] = '';
-		$this->data['hh'] = json_decode($this->model("HangHoaModel")->getAll());
+		$this->data['hhtk'] = json_decode($this->model("HangHoaModel")->getAll($maCuaHang));
+		$this->data['hh'] = json_decode($this->model("HangHoaModel")->getAll($maCuaHang));
 		$this->data['ncc'] = json_decode($this->model("NhaCungCapModel")->getAll($maCuaHang));
 		$this->render("layout/admin_layout", $this->data);
-
 	}
 }

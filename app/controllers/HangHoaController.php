@@ -1,14 +1,14 @@
 <?php
-class CuaHangController extends BaseController
+class HangHoaController extends BaseController
 {
 	public $model_res, $data = [];
 	public function __construct()
 	{
-		$this->model_res = $this->model("CuaHangModel");
+		$this->model_res = $this->model("HangHoaModel");
 	}
-	public function getAll()
+	public function getAll($macuahang)
 	{
-		echo $this->model_res->getAll();
+		echo $this->model_res->getAll($macuahang);
 	}
 	public function insert($tencuahang, $chinhanh)
 	{
