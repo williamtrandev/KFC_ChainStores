@@ -30,4 +30,9 @@ class HangHoaController extends BaseController
 	{
 		echo $this->model_res->getHangHoaTheoNCC($maNhaCungCap);
 	}
+	public function getAllHangHoa()
+	{
+		echo $this->model_res->getAllHangHoa();
+	}
+	
 }

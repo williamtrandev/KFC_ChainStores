@@ -75,7 +75,9 @@
 				});
 		}
 		fetchGetAllDonHangOnline();
+		let OrderDetail = [];
 		$(".tbody-order-online").on("click", ".detail", function() {
+			OrderDetail = [];
 			let modal = $("#modalOrderList");
 			let madonhang = $($(this).find("td")[1]).text();
 			maDonHangClick = madonhang;
@@ -91,7 +93,10 @@
 						<td>${element.tenMonAn}</td>
 						<td>${element.soLuong}</td>
 						<td>${element.gia}</td>
-					</tr>`
+					</tr>`;
+						OrderDetail.push({
+							mamonan: element.maMonAn
+						});
 					});
 					$(".tbody-order").append(tr);
 				})
@@ -106,6 +111,17 @@
 					if (data == 1) {
 						alert("Đã hoàn thành đơn hàng");
 						fetchGetAllDonHangOnline();
+						// Lấy danh sách các nguyên liệu
+						OrderDetail.forEach(element => {
+							fetch(`<?php echo _WEB_ROOT ?>/monAn/getAllNguyenLieu/${element.mamonan}`)
+								.then(res => res.json())
+								.then(data => {
+									// Trừ từng món
+									data.forEach(element => {
+										fetch(`<?php echo _WEB_ROOT ?>/phieuNhapHang/updateKho/${element.maHang}/${element.soLuong}`)
+									});
+								})
+						});
 						$("#modalOrderList").modal("hide");
 					} else {
 						alert("Đã có gì đó xảy ra");

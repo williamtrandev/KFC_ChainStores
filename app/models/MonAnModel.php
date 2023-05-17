@@ -46,7 +46,7 @@ class MonAnModel extends BaseModel
 			$res->execute();
 		} else {
 			$res = $this->db->prepare("update monan set tenMonAn=?, mota=?, gia=?, image_path=?, id_loaimon=? where maMonAn=?");
-			$res->bind_param('ssisii', $name, $detail, $price, $image_path,$id_loaimon, $mamonan);
+			$res->bind_param('ssisii', $name, $detail, $price, $image_path, $id_loaimon, $mamonan);
 			$res->execute();
 		}
 		return $res->affected_rows == 1;
@@ -55,6 +55,25 @@ class MonAnModel extends BaseModel
 	{
 		$res = $this->db->prepare("update monan set deleted=1 where maMonAn=?");
 		$res->bind_param('i', $mamonan);
+		$res->execute();
+		return $res->affected_rows == 1;
+	}
+	public function getAllNguyenLieu($mamonan)
+	{
+		$res = $this->db->prepare("select * from nguyenlieu nl join hanghoa hh on nl.maHang = hh.maHang where nl.maMonAn = ?");
+		$res->bind_param("i", $mamonan);
+		$res->execute();
+		$data = [];
+		$result = $res->get_result();
+		while ($row = $result->fetch_assoc()) {
+			$data[] = $row;
+		}
+		return json_encode($data);
+	}
+	public function insertNL($mahang, $mamonan, $soluong)
+	{
+		$res = $this->db->prepare("insert into nguyenlieu (maHang, maMonAn, soLuong) values (?, ?, ?)");
+		$res->bind_param("iid", $mahang, $mamonan, $soluong);
 		$res->execute();
 		return $res->affected_rows == 1;
 	}

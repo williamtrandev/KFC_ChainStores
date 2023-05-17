@@ -22,5 +22,8 @@ class PhieuNhapHangController extends BaseController
 	{
 		echo $this->model_pnh->insert($maNhaCungCap, $tongTien, $maCuaHang);
 	}
-	
+	public function updateKho($maHang, $soluong)
+	{
+		echo $this->model_pnh->updateKho($maHang, $soluong);
+	}
 }

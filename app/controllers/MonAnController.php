@@ -18,7 +18,8 @@ class MonAnController extends BaseController
 		move_uploaded_file($_FILES['image_path-add']['tmp_name'], $target_file);
 		echo $this->model_food->insert($name, $detail, $price, $image_path, $loaimon);
 	}
-	public function update() {
+	public function update()
+	{
 		$mamonan = $_POST['maMonAn'];
 		$name = $_POST['name'];
 		$detail = $_POST['detail'];
@@ -33,10 +34,20 @@ class MonAnController extends BaseController
 		}
 		echo $this->model_food->update($name, $detail, $price, $image_path, $loaimon, $mamonan);
 	}
-	public function delete($mamonan) {
+	public function delete($mamonan)
+	{
 		echo $this->model_food->delete($mamonan);
 	}
-	public function getMonAnById($id) {
+	public function getMonAnById($id)
+	{
 		echo $this->model_food->getMonAnById($id);
+	}
+	public function getAllNguyenLieu($mamonan)
+	{
+		echo $this->model_food->getAllNguyenLieu($mamonan);
+	}
+	public function insertNL($mahang, $mamonan, $soluong)
+	{
+		echo $this->model_food->insertNL($mahang, $mamonan, $soluong);
 	}
 }

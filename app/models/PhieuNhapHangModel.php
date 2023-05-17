@@ -51,4 +51,27 @@ class PhieuNhapHangModel extends BaseModel
 		$result = $res->get_result();
 		return $result->fetch_assoc()['maPhieuNhap'];
 	}
+	public function checkSoLuongTonKho($maHang, $soluong)
+	{
+		$res = $this->db->prepare("select COUNT(*) as available_count from kho where maHang = ? group by maHang having sum(soLuong) >= ?");
+		$res->bind_param("id", $maHang, $soluong);
+		$res->execute();
+		$result = $res->get_result();
+		return $result->fetch_assoc()['availabel_count'];
+	}
+	public function updateKho($maHang, $soluong)
+	{
+		$res = $this->db->prepare("UPDATE kho SET soluong = CASE WHEN (SELECT SUM(soLuong) FROM kho WHERE maHang = ?) >= ? THEN
+        CASE
+            WHEN ? > 0 THEN
+                (SELECT SUM(soLuong) - ? FROM kho WHERE maHang = ? ORDER BY id ASC LIMIT 1)
+            ELSE
+                soLuong
+        END
+    ELSE
+        soLuong END WHERE mahang = ?;");
+		$res->bind_param("idddii", $maHang, $soluong, $soluong, $soluong, $maHang, $maHang);
+		$res->execute();
+		return 1;
+	}
 }

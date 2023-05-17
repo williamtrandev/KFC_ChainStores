@@ -25,5 +25,14 @@ class HangHoaModel extends BaseModel
 		}
 		return json_encode($data);
 	}
+	public function getAllHangHoa()
+	{
+		$res = $this->db->query("select * from hanghoa");
+		$data = [];
+		while ($row = $res->fetch_assoc()) {
+			$data[] = $row;
+		}
+		return json_encode($data);
+	}
 	
 }

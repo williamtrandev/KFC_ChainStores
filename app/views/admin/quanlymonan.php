@@ -27,7 +27,7 @@
 						<td>$price</td>
 						<td><div class='w-100 d-flex justify-content-center'><img src='$img_path' style='width: 50px; height: 50px'></div></td>
 						<td>
-								<i class='fa-solid fa-wheat-awn-circle-exclamation me-3' style='font-size: 1.4rem; color: blue; cursor: pointer'></i>
+								<i class='fa-solid fa-wheat-awn-circle-exclamation me-3 icon-addNL' style='font-size: 1.4rem; color: blue; cursor: pointer'></i>
 								<i class='fa-solid fa-marker me-3 icon-update' style='font-size: 1.4rem; color: green; cursor: pointer' data-type='$item->id_loaimon' onclick='handleEdit(this, $item->maMonAn)'></i>
 								<i class='fa-solid fa-trash icon-remove' style='font-size: 1.4rem; color: red; cursor: pointer'></i>
 						</td>
@@ -64,7 +64,7 @@
 						<td>$price</td>
 						<td><div class='w-100 d-flex justify-content-center'><img src='$img_path' style='width: 50px; height: 50px'></div></td>
 						<td>
-								<i class='fa-solid fa-wheat-awn-circle-exclamation me-3' style='font-size: 1.4rem; color: blue; cursor: pointer'></i>
+								<i class='fa-solid fa-wheat-awn-circle-exclamation me-3 icon-addNL' style='font-size: 1.4rem; color: blue; cursor: pointer'></i>
 								<i class='fa-solid fa-marker me-3 icon-update' style='font-size: 1.4rem; color: green; cursor: pointer' data-type='$item->id_loaimon' onclick='handleEdit(this, $item->maMonAn)'></i>
 								<i class='fa-solid fa-trash icon-remove' style='font-size: 1.4rem; color: red; cursor: pointer'></i>
 						</td>
@@ -101,7 +101,7 @@
 						<td>$price</td>
 						<td><div class='w-100 d-flex justify-content-center'><img src='$img_path' style='width: 50px; height: 50px'></div></td>
 						<td>
-								<i class='fa-solid fa-wheat-awn-circle-exclamation me-3' style='font-size: 1.4rem; color: blue; cursor: pointer'></i>
+								<i class='fa-solid fa-wheat-awn-circle-exclamation me-3 icon-addNL' style='font-size: 1.4rem; color: blue; cursor: pointer'></i>
 								<i class='fa-solid fa-marker me-3 icon-update' style='font-size: 1.4rem; color: green; cursor: pointer' data-type='$item->id_loaimon' onclick='handleEdit(this, $item->maMonAn)'></i>
 								<i class='fa-solid fa-trash icon-remove' style='font-size: 1.4rem; color: red; cursor: pointer'></i>
 						</td>
@@ -138,7 +138,7 @@
 						<td>$price</td>
 						<td><div class='w-100 d-flex justify-content-center'><img src='$img_path' style='width: 50px; height: 50px'></div></td>
 						<td>
-								<i class='fa-solid fa-wheat-awn-circle-exclamation me-3' style='font-size: 1.4rem; color: blue; cursor: pointer'></i>
+								<i class='fa-solid fa-wheat-awn-circle-exclamation me-3 icon-addNL' style='font-size: 1.4rem; color: blue; cursor: pointer'></i>
 								<i class='fa-solid fa-marker me-3 icon-update' style='font-size: 1.4rem; color: green; cursor: pointer' data-type='$item->id_loaimon' onclick='handleEdit(this, $item->maMonAn)'></i>
 								<i class='fa-solid fa-trash icon-remove' style='font-size: 1.4rem; color: red; cursor: pointer'></i>
 						</td>
@@ -175,7 +175,7 @@
 						<td>$price</td>
 						<td><div class='w-100 d-flex justify-content-center'><img src='$img_path' style='width: 50px; height: 50px'></div></td>
 						<td>
-								<i class='fa-solid fa-wheat-awn-circle-exclamation me-3' style='font-size: 1.4rem; color: blue; cursor: pointer'></i>
+								<i class='fa-solid fa-wheat-awn-circle-exclamation me-3 icon-addNL' style='font-size: 1.4rem; color: blue; cursor: pointer'></i>
 								<i class='fa-solid fa-marker me-3 icon-update' style='font-size: 1.4rem; color: green; cursor: pointer' data-type='$item->id_loaimon' onclick='handleEdit(this, $item->maMonAn)'></i>
 								<i class='fa-solid fa-trash icon-remove' style='font-size: 1.4rem; color: red; cursor: pointer'></i>
 						</td>
@@ -212,7 +212,7 @@
 						<td>$price</td>
 						<td><div class='w-100 d-flex justify-content-center'><img src='$img_path' style='width: 50px; height: 50px'></div></td>
 						<td>
-								<i class='fa-solid fa-wheat-awn-circle-exclamation me-3' style='font-size: 1.4rem; color: blue; cursor: pointer'></i>
+								<i class='fa-solid fa-wheat-awn-circle-exclamation me-3 icon-addNL' style='font-size: 1.4rem; color: blue; cursor: pointer'></i>
 								<i class='fa-solid fa-marker me-3 icon-update' style='font-size: 1.4rem; color: green; cursor: pointer' data-type='$item->id_loaimon' onclick='handleEdit(this, $item->maMonAn)'></i>
 								<i class='fa-solid fa-trash icon-remove' style='font-size: 1.4rem; color: red; cursor: pointer' onclick='removeFood()'></i>
 						</td>
@@ -249,7 +249,7 @@
 						<td>$price</td>
 						<td><div class='w-100 d-flex justify-content-center'><img src='$img_path' style='width: 50px; height: 50px'></div></td>
 						<td>
-								<i class='fa-solid fa-wheat-awn-circle-exclamation me-3' style='font-size: 1.4rem; color: blue; cursor: pointer'></i>
+								<i class='fa-solid fa-wheat-awn-circle-exclamation me-3 icon-addNL' style='font-size: 1.4rem; color: blue; cursor: pointer'></i>
 								<i class='fa-solid fa-marker me-3 icon-update' style='font-size: 1.4rem; color: green; cursor: pointer' data-type='$item->id_loaimon' onclick='handleEdit(this, $item->maMonAn)'></i>
 								<i class='fa-solid fa-trash icon-remove' style='font-size: 1.4rem; color: red; cursor: pointer' onclick='removeFood()'></i>
 						</td>
@@ -391,8 +391,34 @@
 			</div>
 
 			<!-- Modal body -->
-			<div class="modal-body text-reset text-muted">
+			<div class="modal-body text-reset text-muted tbody-nguyenlieu">
+				<h4 class="text-reset text-bold">Nguyên liệu đã có</h4>
+				<table class="table table-striped text-reset">
+					<thead>
+						<tr>
+							<th scope="col">STT</th>
+							<th scope="col">Tên hàng hóa</th>
+							<th scope="col">Số lượng</th>
+							<th scope="col">Đơn vị tính</th>
+						</tr>
+					</thead>
+					<tbody class="tbody-hhDaCo">
 
+					</tbody>
+				</table>
+				<form action="" style="border-top: 1px solid; padding: 20px 0">
+					<h5 class="text-reset">Nguyên liệu thêm</h5>
+					<div class="form-group">
+						<label for="hanghoa">Tên nguyên liệu:</label>
+						<select name="" id="hanghoa" class="form-select">
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label for="email">Số lượng:</label>
+						<input type="text" class="form-control" id="soluonghh">
+					</div>
+				</form>
 			</div>
 
 			<!-- Modal footer -->
@@ -405,7 +431,70 @@
 </div>
 <script>
 	$(function() {
-		$("#addNLModal").modal("show");
+		let dvt_click = "";
+
+		function fetchHH() {
+			fetch(`<?php echo _WEB_ROOT ?>/hangHoa/getAllHangHoa`)
+				.then(res => res.json())
+				.then(data => {
+					let op = "";
+					data.forEach(element => {
+						op += `<option value="${element.maHang}">${element.tenHang} - ${element.donViTinh}</option>`;
+					})
+					$("#hanghoa").append(op);
+				})
+		}
+		fetchHH();
+		$(".icon-addNL").click((e) => {
+			let mamonan = $($(e.target).closest("tr").find("td")[0]).attr("data-id");
+			$("#addNLModal").attr("data-id", mamonan);
+			$("#addNLModal").modal("show");
+			$(".tbody-nguyenlieu form select").children().remove();
+			$(".tbody-hhDaCo").children().remove();
+			fetchHH();
+			fetch(`<?php echo _WEB_ROOT ?>/monAn/getAllNguyenLieu/${mamonan}`)
+				.then(res => res.json())
+				.then(data => {
+					let tr = ``;
+					let i = 1;
+					data.forEach(element => {
+						tr +=
+							`<tr>
+							<td data-id=${element.maMonAn}>${i++}</td>
+							<td>${element.tenHang}</td>
+							<td>${element.soLuong}</td>
+							<td>${element.donViTinh}</td>
+						</tr>`;
+					});
+					$(".tbody-hhDaCo").append(tr);
+				})
+				.catch(err => console.log(err));
+		})
+		$(".btn-addNL").click(() => {
+			let mamonan = $("#addNLModal").attr("data-id");
+			let mahh = $("#hanghoa").val();
+			let soluong = $("#soluonghh").val();
+			fetch(`<?php echo _WEB_ROOT ?>/monAn/insertNL/${mahh}/${mamonan}/${soluong}`)
+				.then(res => res.text())
+				.then(data => {
+					if (data == 1) {
+						let i = parseInt($($(".tbody-hhDaCo").find("tr").last().find("td")[0]).text());
+						let tenhang_dvt = $("#hanghoa option:selected").text().split("-");
+						
+						let dvt = $("")
+						let tr = `<tr>
+							<td data-id=${mamonan}>${++i}</td>
+							<td>${tenhang_dvt[0]}</td>
+							<td>${soluong}</td>
+							<td>${tenhang_dvt[1]}</td>
+						</tr>`;
+						$(".tbody-hhDaCo").append(tr);
+					} else {
+						alert("Đã có gì đó xảy ra");
+					}
+				})
+				.catch(err => console.log(err));
+		})
 	})
 
 	function handleEdit(elem, maMonAn) {
